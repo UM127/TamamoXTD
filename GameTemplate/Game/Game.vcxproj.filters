@@ -15,7 +15,6 @@
     <ClCompile Include="Player1.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="Player2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -26,6 +25,5 @@
     <ClInclude Include="Player1.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="Player2.h" />
   </ItemGroup>
 </Project>

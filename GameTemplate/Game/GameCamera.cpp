@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "GameCamera.h"
 #include "Player1.h"
-#include "Player2.h"
 
 namespace
 {
@@ -14,7 +13,6 @@ bool GameCamera::Start()
 	m_toCameraPos.Set(0.0f, 125.0f, -250.0f);
 	//プレイヤーのインスタンスを探す。
 	m_player = FindGO<Player1>("player1");
-	m_player2 = FindGO<Player2>("player2");
 
 	//カメラのニアクリップとファークリップを設定する。
 	g_camera3D->SetNear(1.0f);
@@ -38,8 +36,8 @@ void GameCamera::Update()
 	//カメラを更新。
 	//注視点を計算する。
 	Vector3 target;
-	//プレイヤー１と２の中間地点を注視点にする。
-	target = (m_player->GetPlayer1Position()+ m_player2->GetPlayer2Position())/2;
+	//プレイヤー１を注視点にする。
+	target = m_player->GetPlayer1Position();
 	//プレイヤの足元からちょっと上を注視点とする。
 	target.y += 80.0f;
 	target.z -= 80.0f;

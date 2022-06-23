@@ -191,17 +191,20 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
     
     // ディレクションライト+ポイントライト+環境光+スポットライトして、最終的な光を求める
     float3 lig = directionLig;
-                //+ m_pointLig
-                //+ m_ambientLig.ambientLight
-                //+ m_spotLig;
+    //トゥーンの時は↓からすぽっとまで消す
+                + m_pointLig
+                + m_ambientLig.ambientLight
+                + m_spotLig;
     
     //最終的な反射光にリムの反射光を合算する。
-    //lig += limColor;
+    //とぅーんの時は消す
+    lig += limColor;
     
 	float4 albedoColor = g_albedo.Sample(g_sampler, psIn.uv);
     // テクスチャカラーに求めた光を乗算して最終出力カラーを求める
-   // albedoColor.xyz *= lig;
-    albedoColor.xyz *= toonPoint;
+    //とぅーんの時は消す
+    albedoColor.xyz *= lig;
+    //albedoColor.xyz *= toonPoint;
 	return albedoColor;
 }
 
