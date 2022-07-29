@@ -121,10 +121,11 @@ namespace nsK2EngineLow {
 		/// スポットライトの射出角度を設定
 		/// </summary>
 		/// <param name="range"></param>
+		/*
 		void SetSpotAngle(const int& spangle)
 		{
 			m_light.m_spotLig.spAngle = Math::DegToRad(spangle);
-		}
+		}*/
 		Light& GetLight()
 		{
 			return m_light;

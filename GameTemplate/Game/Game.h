@@ -28,7 +28,7 @@ private:
 	ModelRender     m_modelRender;					//モデルレンダー
 	Player1*        m_player;						//プレイヤー1
 	Vector3         m_pointligpos;                  //ポイントライトの座標
-	Vector3         m_directionligColor;		    //セットする色
+	Vector3         m_directionligColor={ 1.0f, 1.0f, 1.0f };		    //セットする色
 	Vector3			m_spPosition;					//スポットライトのポジション
 	Vector3			m_spDirection;                  //スポットライトの方向
 

@@ -245,6 +245,7 @@
     </ClCompile>
     <ClCompile Include="CollisionObject.cpp" />
     <ClCompile Include="Bloom.cpp" />
+    <ClCompile Include="PostEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="k2EngineLowPreCompile.h" />
@@ -540,6 +541,7 @@
     </ClInclude>
     <ClInclude Include="CollisionObject.h" />
     <ClInclude Include="Bloom.h" />
+    <ClInclude Include="PostEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="graphics">

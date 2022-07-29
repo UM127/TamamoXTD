@@ -10,7 +10,7 @@ bool Player1::Start()
 {
 
 	//モデルの読み込み
-	m_player.Init("Assets/modelData/model/eggR.tkm");
+	m_player.Init("Assets/modelData/unityChan.tkm");
 
 	m_position.z = 0.0f;
 	

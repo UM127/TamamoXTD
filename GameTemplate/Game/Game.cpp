@@ -42,18 +42,23 @@ void Game::Update()
 	m_spPosition.x = 0000.0f;
 	g_directionLig.SetSpotPos(m_spPosition);//スポットライトの位置を設定
 
-	g_directionLig.SetLigColor({0.5f,0.5f,0.5f});
 
 	//Aボタンを押したら,体力回復。
 	if (g_pad[0]->IsPress(enButtonA))
 	{
-		m_hp += 1;
+		m_directionligColor.x +=0.1f;
+		m_directionligColor.y += 0.1f;
+		m_directionligColor.z += 0.1f;
 	}
 	//Bボタンを押したら、体力を減らす。
 	else if (g_pad[0]->IsPress(enButtonB))
 	{
-		m_hp -= 1;
+		m_directionligColor.x -= 0.1f;
+		m_directionligColor.y -= 0.1f;
+		m_directionligColor.z -= 0.1f;
 	}
+	g_directionLig.SetLigColor({ m_directionligColor });
+
 	//HPが0より減っていたら。
 	if (m_hp < 0)
 	{
