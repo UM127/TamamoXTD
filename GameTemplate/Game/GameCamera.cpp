@@ -1,23 +1,18 @@
 #include "stdafx.h"
 #include "GameCamera.h"
-#include "Player1.h"
-
-namespace
-{
-	Vector3 CameraFarPlus = { 0.0f,0.0f,10.0f };
-}
+#include "Player.h"
 
 bool GameCamera::Start()
 {
 	//注視点から視点までのベクトルを設定。
-	m_toCameraPos.Set(0.0f, 125.0f, -250.0f);
+	m_toCameraPos.Set(0.0f, 925.0f, 700.0f);
 	//プレイヤーのインスタンスを探す。
-	m_player = FindGO<Player1>("player1");
+	m_player = FindGO<Player>("player");
 
-	//カメラのニアクリップとファークリップを設定する。
-	g_camera3D->SetNear(1.0f);
-	g_camera3D->SetFar(60000.0f);
-
+	//近平面を設定する。
+	g_camera3D->SetNear(5.0f);
+	//遠平面を設定する。
+	g_camera3D->SetFar(13000.0f);
 	return true;
 }
 
@@ -35,26 +30,23 @@ void GameCamera::Update()
 {
 	//カメラを更新。
 	//注視点を計算する。
-	Vector3 target;
-	//プレイヤー１を注視点にする。
-	target = m_player->GetPlayer1Position();
+	Vector3 target = m_player->GetPlayerPosition();
 	//プレイヤの足元からちょっと上を注視点とする。
-	target.y += 80.0f;
-	target.z -= 80.0f;
+	//target.y += 80.0f;
+	//target.z -= 80.0f;
 	Vector3 toCameraPosOld = m_toCameraPos;
 	//パッドの入力を使ってカメラを回す。
 	float x = g_pad[0]->GetRStickXF();
 	float y = g_pad[0]->GetRStickYF();
 	//Y軸周りの回転
 	Quaternion qRot;
-	qRot.SetRotationDeg(Vector3::AxisY, 1.3f * x);
+	qRot.SetRotationDeg(Vector3::AxisY, 1.5f * x);
 	qRot.Apply(m_toCameraPos);
-
 	//X軸周りの回転。
 	Vector3 axisX;
 	axisX.Cross(Vector3::AxisY, m_toCameraPos);
 	axisX.Normalize();
-	qRot.SetRotationDeg(axisX, 1.3f * y);
+	qRot.SetRotationDeg(axisX, 0.9f * y);
 	qRot.Apply(m_toCameraPos);
 	//カメラの回転の上限をチェックする。
 	//注視点から視点までのベクトルを正規化する。
@@ -62,15 +54,14 @@ void GameCamera::Update()
 	//大きさが１になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ。
 	Vector3 toPosDir = m_toCameraPos;
 	toPosDir.Normalize();
-	if (toPosDir.y < -0.2f) {
+	if (toPosDir.y < -0.1f) {
 		//カメラが上向きすぎ。
 		m_toCameraPos = toCameraPosOld;
 	}
-	else if (toPosDir.y > 0.9f) {
+	else if (toPosDir.y > 0.8f) {
 		//カメラが下向きすぎ。
 		m_toCameraPos = toCameraPosOld;
 	}
-	
 	//視点を計算する。
 	Vector3 pos = target + m_toCameraPos;
 	//メインカメラに注視点と視点を設定する。
@@ -79,22 +70,4 @@ void GameCamera::Update()
 
 	//カメラの更新。
 	g_camera3D->Update();
-}
-
-void GameCamera::karioki()
-{
-	if (g_pad[0]->IsTrigger(enButtonA)) {
-		//将来的にはこのくらいの角度で2p対戦できるようにするかも？
-		//Y軸周りの回転
-		Quaternion qRot;
-		qRot.SetRotationDeg(Vector3::AxisY, -90.0f);
-		qRot.Apply(m_toCameraPos);
-
-		//X軸周りの回転。
-		Vector3 axisX;
-		axisX.Cross(Vector3::AxisY, m_toCameraPos);
-		axisX.Normalize();
-		qRot.SetRotationDeg(axisX, 10.0f);
-		qRot.Apply(m_toCameraPos);
-	}
 }

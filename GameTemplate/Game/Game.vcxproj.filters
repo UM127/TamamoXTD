@@ -12,7 +12,7 @@
       <Filter>system</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Player1.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="GameCamera.cpp" />
   </ItemGroup>
@@ -22,7 +22,7 @@
       <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Player1.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="GameCamera.h" />
   </ItemGroup>

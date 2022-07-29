@@ -1,5 +1,5 @@
 #pragma once
-class Player1;
+class Player;
 class BackGround;
 class GameCamera;
 
@@ -26,7 +26,7 @@ private:
 	SpriteRender	m_spriteRender;
 	FontRender      m_fontRender;					//フォントレンダー
 	ModelRender     m_modelRender;					//モデルレンダー
-	Player1*        m_player;						//プレイヤー1
+	Player*        m_player;						//プレイヤー1
 	Vector3         m_pointligpos;                  //ポイントライトの座標
 	Vector3         m_directionligColor={ 1.0f, 1.0f, 1.0f };		    //セットする色
 	Vector3			m_spPosition;					//スポットライトのポジション
