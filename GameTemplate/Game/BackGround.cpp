@@ -15,8 +15,9 @@ BackGround::~BackGround()
 
 bool BackGround::Start()
 {
+	m_backGround.Init("Assets/modelData/stage/stage.tkm");
 	m_backGround.SetScale(Vector3(1.0f, 1.0f, 1.0f));
-	m_backGround.Init("Assets/modelData/stage/grassfloor.tkm");
+	m_backGround.SetPosition(Vector3(0.0f, -1.0f, 0.0f));
 	//m_backGround.Init("Assets/modelData/stage/bg.tkm");
 
 	//	m_backGround.SetScale(m_scale);

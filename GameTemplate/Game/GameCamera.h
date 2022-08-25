@@ -1,7 +1,6 @@
 #pragma once
 
 class Player;
-class Player2;
 
 class GameCamera :public IGameObject
 {
@@ -10,11 +9,6 @@ public:
 	~GameCamera();
 	bool Start();
 	void Update();
-
-	/// <summary>
-	/// 2p時のカメラ位置のための仮置き
-	/// </summary>
-	void karioki();
 
 public:
 	/// <summary>
@@ -27,7 +21,6 @@ public:
 
 private:
 	Player* m_player;	//プレイヤー。
-	Player2* m_player2;	//プレイヤー。
 	Vector3 m_toCameraPos;	//注視点から視点に向かうベクトル。
 	int m_CameraState = 0;
 };

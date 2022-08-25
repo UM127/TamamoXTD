@@ -35,9 +35,7 @@ namespace nsK2EngineLow {
 			//スキンメッシュ用の頂点シェーダーのエントリーポイントを指定。
 			initData.m_vsSkinEntryPointFunc = "VSSkinMain";
 			//モデルの上方向を指定する。
-			//3dsMaxではデフォルトZアップになっているが、
-			//ユニティちゃんはアニメーションでYアップに変更されている。
-			initData.m_modelUpAxis = enModelUpAxisY;
+			initData.m_modelUpAxis = enModelUpAxis;
 		}
 		else {
 			//ノンスキンメッシュ用の頂点シェーダーのエントリーポイントを指定する。
@@ -47,8 +45,8 @@ namespace nsK2EngineLow {
 		initData.m_expandConstantBuffer = &g_pointLig;
 		initData.m_expandConstantBufferSize = sizeof(g_pointLig);
 		*/
-		initData.m_expandConstantBuffer = &g_directionLig.GetLight();
-		initData.m_expandConstantBufferSize = sizeof(g_directionLig.GetLight());
+		initData.m_expandConstantBuffer = &g_Lig.GetLight();
+		initData.m_expandConstantBufferSize = sizeof(g_Lig.GetLight());
 		
 
 		// アニメーションを初期化。

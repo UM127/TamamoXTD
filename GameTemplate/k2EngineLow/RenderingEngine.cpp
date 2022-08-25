@@ -14,7 +14,7 @@ namespace nsK2EngineLow
 	}
 	void RenderingEngine::Execute(RenderContext& rc)
 	{
-		g_directionLig.Update();
+		g_Lig.Update();
 		
 		//m_modelRenderCB.m_light = g_Light.GetLight();
 		//m_modelRenderCB.mlvp = GetLightCamera().GetViewProjectionMatrix();

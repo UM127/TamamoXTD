@@ -21,6 +21,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D->SetTarget({ 0.0f, 50.0f, 0.0f });
 
 	g_postEffect.Init();
+	g_Lig.Init();
 	g_bloom.Init();
 	g_renderingEngine.Init();
 
@@ -43,10 +44,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 		g_postEffect.Render(renderContext);
 		// スプライトレンダーの描画処理を呼び出す。
-		//g_renderingEngine.SpriteRenderDraw(renderContext);
+		g_renderingEngine.SpriteRenderDraw(renderContext);
 
 		// フォントレンダーの描画処理を呼び出す。
-		//g_renderingEngine.FontRenderDraw(renderContext);
+		g_renderingEngine.FontRenderDraw(renderContext);
 
 		// デバッグ描画処理を実行する。
 		g_k2EngineLow->DebubDrawWorld();

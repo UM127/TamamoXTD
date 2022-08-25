@@ -46,12 +46,13 @@ namespace nsK2EngineLow {
 		};
 
 	public:
-		DirectionLight();
+		DirectionLight() {};
 		~DirectionLight();
 		/// <summary>
 		/// 更新処理
 		/// </summary>
 		void Update();
+		void Init();
 		/// <summary>
 		/// ディレクションライトの方向を設定
 		/// </summary>
@@ -135,5 +136,5 @@ namespace nsK2EngineLow {
 	};
 
 	//他の場所でも読み込めるようにグローバルにする。
-	extern DirectionLight g_directionLig;
+	extern DirectionLight g_Lig;
 }

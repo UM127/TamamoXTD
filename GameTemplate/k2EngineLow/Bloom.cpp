@@ -61,7 +61,6 @@ namespace nsK2EngineLow {
 	void Bloom::InitBlur()
 	{
 		//step-1 ガウシアンブラーを初期化。
-
 		//gaussianBlur[0]は輝度テクスチャにガウシアンブラーをかける。
 		gaussianBlur[0].Init(&g_postEffect.luminnceRenderTarget.GetRenderTargetTexture());
 		//gaussianBlur[1]はgaussianBlur[0]のテクスチャにガウシアンブラーをかける。
@@ -100,6 +99,7 @@ namespace nsK2EngineLow {
 
 	void Bloom::Blur(RenderContext& rc)
 	{
+		//ガウシアンブラーを4回実行する。
 		gaussianBlur[0].ExecuteOnGPU(rc, 10);
 		gaussianBlur[1].ExecuteOnGPU(rc, 10);
 		gaussianBlur[2].ExecuteOnGPU(rc, 10);
