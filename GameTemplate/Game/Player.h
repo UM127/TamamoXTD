@@ -1,6 +1,7 @@
 #pragma once
 
 class Unit;
+class Attack;
 
 class Player : public IGameObject
 {
@@ -31,6 +32,10 @@ public:
 	/// 文字描画
 	/// </summary>
 	void Font();
+	/// <summary>
+	/// 自動攻撃の周期等の処理
+	/// </summary>
+	void AttackMade();
 	/// <summary>
 	/// 召喚用のボックスの移動処理
 	/// </summary>
@@ -72,6 +77,14 @@ public:
 	{
 		return m_position;
 	}
+	/// <summary>
+	/// キャラクターコントローラーを取得。
+	/// </summary>
+	/// <returns>キャラクターコントローラー。</returns>
+	CharacterController& GetCharacterController()
+	{
+		return m_characterController;
+	}
 
 
 
@@ -110,11 +123,20 @@ private:
 	Vector3 m_moveSpeed;							   //移動速度
 	Vector3 m_summonboxpos = Vector3::Zero;					//召喚用のボックスの位置
 	Vector3 m_summonboxcollisionObject = Vector3::Zero;		//召喚用のボックスのコリジョンの位置
-	Vector3 m_forward;                                 //キャラクターの前方向のベクトル
+	Vector3 m_forward = {0.0f,0.0f,1.0f};                                 //キャラクターの前方向のベクトル
 	CollisionObject* m_collisionObject;
+
+	Attack* m_attack[3];   //攻撃
 
 	int m_UnitMaxnum = 2;//ユニット番号の最大値
 	int m_summonUnitNo = 0;
 	int m_playerState;
+	int m_playerweaponflag = true;//最初の武器
+	int m_playerweaponflag2 = false;
+	int m_playerweaponflag3 = false;
+	int m_attackstage[3];//攻撃のレベル(段階)
+	int m_attackstate = false;//攻撃可能か不可能か
+	float m_attackmadetimer[5];
+	float m_attackcooltime[5];
 	float m_timer = 0.0f;
 };

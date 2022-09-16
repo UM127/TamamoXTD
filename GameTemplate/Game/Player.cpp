@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "GameCamera.h"
 #include "Unit.h"
+#include "Attack.h"
 
 //CollisionObjectを使用するために、ファイルをインクルードする。
 #include "CollisionObject.h"
@@ -19,7 +20,7 @@ bool Player::Start()
 	m_summonbox.Update();
 	//コリジョンオブジェクトを作成する。
 	m_collisionObject = NewGO<CollisionObject>(0);
-	//OX状のコリジョンを作成する。
+	//BOX状のコリジョンを作成する。
 	m_collisionObject->CreateBox(m_summonboxcollisionObject,       //座標。
 		Quaternion::Identity,                                   //回転。
 		{ 75.0f,1.0f,75.0f });                                                //球の大きさ(半径)。
@@ -33,6 +34,7 @@ bool Player::Start()
 	m_player.SetRotation(m_rotation);
 	m_player.SetPosition(m_position);
 	m_player.Update();
+	m_attackstage[0] = 1;
 
 	return true;
 }
@@ -46,7 +48,8 @@ void Player::Update()
 	Move();
 	//回転処理。
 	Rotation();
-
+	//攻撃作成処理
+	//AttackMade();
 	/*
 	m_player.UpdateWorldMatrix(
 		m_characterController.GetPosition(),
@@ -120,6 +123,75 @@ void Player::Move()
 
 	m_player.SetPosition(m_position);
 	m_player.Update();
+}
+
+void Player::AttackMade()
+{
+	//武器が有効化されていて、攻撃が終了したらタイマーをカウントする
+	if (m_playerweaponflag == true && m_attackstate == false)
+	{
+		//攻撃作成に使うタイマーの取得
+		m_attackmadetimer[0] += g_gameTime->GetFrameDeltaTime();
+	}
+	//攻撃作成タイマーが2を越えたら生成して0にする。。
+	if (m_attackmadetimer[0] >= 2.0f)
+	{
+		m_attackstate = true;
+		if (m_attackstage[0] == 0 && m_attackstate == true)
+		{
+			//攻撃の作成(弾)
+			m_attack[0] = NewGO<Attack>(0, "attack");
+			m_attack[0]->SetAttack(0);
+			m_attack[0]->SetMoveSpeed(m_forward);
+			m_attackmadetimer[0] = 0.0f;
+			m_attackstate = false;
+		}
+		if (m_attackstage[0] == 1 && m_attackstate == true)
+		{
+			//攻撃の作成(弾)
+			m_attack[0] = NewGO<Attack>(0, "attack");
+			m_attack[0]->SetAttack(0);
+			m_attack[0]->SetMoveSpeed(m_forward);
+			//クールタイムの取得
+			m_attackcooltime[0] += g_gameTime->GetFrameDeltaTime();
+			if (m_attackcooltime[0] >= 0.1f && m_attackstate == true)
+			{
+				//攻撃の作成(弾)
+				m_attack[1] = NewGO<Attack>(0, "attack");
+				m_attack[1]->SetAttack(0);
+				m_attack[1]->SetMoveSpeed(m_forward);
+				m_attackmadetimer[0] = 0.0f;
+				m_attackcooltime[0] = 0.0f;
+				m_attackstate = false;
+			}
+		}
+		if (m_attackstage[0] == 2 && m_attackstate == true)
+		{
+			//攻撃の作成(弾)
+			m_attack[0] = NewGO<Attack>(0, "attack");
+			m_attack[0]->SetAttack(0);
+			m_attack[0]->SetMoveSpeed(m_forward);
+			//クールタイムの取得
+			m_attackcooltime[0] += g_gameTime->GetFrameDeltaTime();
+			if (m_attackcooltime[0] >= 0.1f && m_attackstate == true)
+			{
+				//攻撃の作成(弾)
+				m_attack[1] = NewGO<Attack>(0, "attack");
+				m_attack[1]->SetAttack(0);
+				m_attack[1]->SetMoveSpeed(m_forward);
+				if (m_attackcooltime[0] >=0.2f && m_attackstate == true)
+				{
+					//攻撃の作成(弾)
+					m_attack[2] = NewGO<Attack>(0, "attack");
+					m_attack[2]->SetAttack(0);
+					m_attack[2]->SetMoveSpeed(m_forward);
+					m_attackmadetimer[0] = 0.0f;
+					m_attackcooltime[0] = 0.0f;
+					m_attackstate = false;
+				}
+			}
+		}
+	}
 }
 
 void Player::Rotation()
