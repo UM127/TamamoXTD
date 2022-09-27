@@ -77,6 +77,7 @@ using namespace Microsoft::WRL;
 #include "FontRender.h"
 #include "DirectionLight.h"
 #include "PointLight.h"
+#include "Shadow.h"
 #include "graphics/GaussianBlur.h"
 #include "PostEffect.h"
 #include "Bloom.h"
