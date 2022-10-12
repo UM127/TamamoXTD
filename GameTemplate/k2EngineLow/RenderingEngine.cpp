@@ -20,9 +20,13 @@ namespace nsK2EngineLow
 		//m_modelRenderCB.mlvp = GetLightCamera().GetViewProjectionMatrix();
 		// ゲームオブジェクトマネージャーの描画処理を呼び出す。
 		g_engine->ExecuteRender();
-		//ShadowMapDraw(rc);
 
+		g_Lig.Update();
+		g_shadow.Render(rc);
 		m_postEffect->Render(rc);
+		//ShadowRenderDraw(rc);
+
+		//g_postEffect.Render(rc);
 
 		//Render2DDraw(rc);
 		//m_renderobject.clear();
@@ -34,6 +38,14 @@ namespace nsK2EngineLow
 		}
 		//登録されてる描画オブジェクトをクリア
 		m_Fontrenders.clear();
+	}
+	void RenderingEngine::ShadowRenderDraw(RenderContext& rc)
+	{
+		for (auto& renderObj : m_Shadowrenders) {
+			renderObj->DrawShadow(rc);
+		}
+		//登録されてる描画オブジェクトをクリア
+		m_Shadowrenders.clear();
 	}
 	void RenderingEngine::Init()
 	{

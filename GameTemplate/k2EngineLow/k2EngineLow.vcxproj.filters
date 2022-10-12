@@ -246,7 +246,8 @@
     <ClCompile Include="CollisionObject.cpp" />
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="PostEffect.cpp" />
-    <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="ShadowRender.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="k2EngineLowPreCompile.h" />
@@ -543,7 +544,9 @@
     <ClInclude Include="CollisionObject.h" />
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="PostEffect.h" />
-    <ClInclude Include="Shadow.h" />
+    <ClInclude Include="ShadowRender.h" />
+    <ClInclude Include="ShadowMap.h" />
+    <ClInclude Include="IRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="graphics">

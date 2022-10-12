@@ -18,7 +18,7 @@ namespace nsK2EngineLow {
         );
 
         //解像度、ミップマップレベル
-        luminnceRenderTarget.Create(
+        luminanceRenderTarget.Create(
             1600,		//解像度はメインレンダリングターゲットと同じ。
             900,		//解像度はメインレンダリングターゲットと同じ。
             1,
@@ -48,17 +48,17 @@ namespace nsK2EngineLow {
 
 
 		// レンダリングターゲットとして利用できるまで待つ
-		rc.WaitUntilToPossibleSetRenderTarget(g_postEffect.luminnceRenderTarget);
+		rc.WaitUntilToPossibleSetRenderTarget(g_postEffect.luminanceRenderTarget);
 
 		// レンダリングターゲットを設定
-		rc.SetRenderTarget(g_postEffect.luminnceRenderTarget);
+		rc.SetRenderTarget(g_postEffect.luminanceRenderTarget);
 		// レンダリングターゲットをクリア
-		rc.ClearRenderTargetView(g_postEffect.luminnceRenderTarget);
+		rc.ClearRenderTargetView(g_postEffect.luminanceRenderTarget);
 
 		g_bloom.LuminanceSpriteDraw(rc);
 
 		// レンダリングターゲットへの書き込み終了待ち
-		rc.WaitUntilFinishDrawingToRenderTarget(g_postEffect.luminnceRenderTarget);
+		rc.WaitUntilFinishDrawingToRenderTarget(g_postEffect.luminanceRenderTarget);
 
 		g_bloom.Blur(rc);
 
@@ -68,7 +68,7 @@ namespace nsK2EngineLow {
 			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
 			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 		);
-		g_bloom.Draw(rc);
+		//g_bloom.Draw(rc);
 		//ここでエフェクトドロー。
 		EffectEngine::GetInstance()->Draw();
     }

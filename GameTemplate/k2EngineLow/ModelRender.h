@@ -1,12 +1,12 @@
 #pragma once
 
 namespace nsK2EngineLow {
-	class ModelRender{
+	class ModelRender {
 	public:
 		ModelRender();
 		~ModelRender();
 		/// <summary>
-        /// 初期化。通常はこの関数で初期化してください。
+		/// 初期化。通常はこの関数で初期化してください。
 		/// </summary>
 		/// <param name="filePath">ファイルパス。</param>
 		/// <param name="animationClips">アニメーションクリップ。</param>
@@ -19,7 +19,26 @@ namespace nsK2EngineLow {
 		/// インスタンシング描画の詳細はSmaple_XXを参照してください。
 		/// </param>
 		void Init(
-			const char* filePath, AnimationClip* animationClips = nullptr,
+			const char* filePath, bool shadow = false, AnimationClip* animationClips = nullptr,
+			int numAnimationClips = 0,
+			EnModelUpAxis enModelUpAxis = enModelUpAxisZ);
+		/// <summary>
+		/// シャドウの初期化。
+		/// </summary>
+		/// <param name="filePath">ファイルパス。</param>
+		/// <param name="animationClips">アニメーションクリップ。</param>
+		/// <param name="numAnimationClips">アニメーションクリップの数。</param>
+		/// <param name="enModelUpAxis">モデルの上方向。</param>
+		/// <param name="isShadowReciever">シャドウレシーバーフラグtrueなら影が落ちる。</param>
+		/// <param name="maxInstance">
+		/// インスタンスの最大数。この引数を１より大きくするとインスタンシング描画が行われます。
+		/// インスタンシング描画を行う際は描画したいインスタンスの数分だけ、UpdateInstancingDraw()を呼び出す必要があります。
+		/// インスタンシング描画の詳細はSmaple_XXを参照してください。
+		/// </param>
+		void ShadowInit(
+			const char* filePath,
+			bool shadow = false,
+			AnimationClip* animationClips = nullptr,
 			int numAnimationClips = 0,
 			EnModelUpAxis enModelUpAxis = enModelUpAxisZ);
 		/// <summary>
@@ -27,8 +46,8 @@ namespace nsK2EngineLow {
 		/// </summary>
 		void Update();
 		/// <summary>
-        /// 描画処理。
-        /// </summary>
+		/// 描画処理。
+		/// </summary>
 		void Draw(RenderContext& rc);
 
 		/// <summary>
@@ -38,6 +57,11 @@ namespace nsK2EngineLow {
 		Model& GetModel()
 		{
 			return m_model;
+		}
+
+		Model& GetShadowModel()
+		{
+			return m_ShadowModel;
 		}
 
 
@@ -88,6 +112,10 @@ namespace nsK2EngineLow {
 		{
 			SetScale({ x, y, z });
 		}
+		void SetShadowReciverBG()
+		{
+			m_ShadowRecieverBG = true;
+		}
 		/// <summary>
 		/// ボーンの名前からボーン番号を検索。
 		/// </summary>
@@ -127,6 +155,14 @@ namespace nsK2EngineLow {
 		{
 			return m_animation.IsPlaying();
 		}
+		/// <summary>
+		/// 描画パスから呼ばれる処理
+		/// </summary>
+		/// <param name="rc"></param>
+		void DrawShadow(RenderContext& rc)
+		{
+			m_ShadowModel.Draw(rc, g_shadow.GetLightCamera());
+		}
 
 	private:
 		// スケルトンを初期化
@@ -136,11 +172,19 @@ namespace nsK2EngineLow {
 	private:
 		AnimationClip*              m_animationClips = nullptr;			// アニメーションクリップ。
 		int							m_numAnimationClips = 0;			// アニメーションクリップの数。
+		int							m_ShadowRecieverBG = false;			// シャドウ導入するのが背景か否か
 		Animation					m_animation;						// アニメーション。
 		Model                       m_model;		         	        // モデル
+		Model						m_bgModel;							// シャドウを受ける背景のモデル
+		Model						m_ShadowModel;						// シャドウ用のモデル
+		ModelInitData				m_bgModelInitData;					// シャドウを受ける背景用のInitdata
+		ModelInitData				m_ShadowModelInitData;				// シャドウモデル用のInitdata
+		Sprite						m_shadowsprite;						// シャドウ用の画像
 		Skeleton                    m_skeleton;	                        // スケルトン
 		Vector3 					m_position = Vector3::Zero;			// 座標。
 		Quaternion	 				m_rotation = Quaternion::Identity;	// 回転。
 		Vector3						m_scale = Vector3::One;				// 拡大率。
+		EnModelUpAxis				m_enFbxUpAxis = enModelUpAxisZ;			// FBXの上方向。
+		const char*					m_shadowfilePath;
 	};
 }

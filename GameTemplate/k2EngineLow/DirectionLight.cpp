@@ -10,27 +10,24 @@ namespace nsK2EngineLow {
 		//視点の位置を設定する。
 		m_light.m_ambientLig.eyePos = (Vector3{ 0.0f, 0.0f, 1.0f });//g_camera3D->GetPosition();
 
-		// 環境光
-		m_light.m_ambientLig.ambientLight.x = 0.5f;
-		m_light.m_ambientLig.ambientLight.y = 0.5f;
-		m_light.m_ambientLig.ambientLight.z = 0.5f;
 		
+		// 環境光
+		m_light.m_ambientLig.ambientLight = { 0.3f,0.3f,0.3f };
+		// ライトのカラーは灰色
+		m_light.m_directionLig.ligColor.x = 0.2f;
+		m_light.m_directionLig.ligColor.y = 0.2f;
+		m_light.m_directionLig.ligColor.z = 0.2f;
 		//ディレクションライト
-		//ライトは左側から当たっている
 		m_light.m_directionLig.ligDirection.x = 1.0f;
 		m_light.m_directionLig.ligDirection.y = -1.0f;
-		m_light.m_directionLig.ligDirection.z = 1.0f;
+		m_light.m_directionLig.ligDirection.z = 0.0f;
 		m_light.m_directionLig.ligDirection.Normalize();
-		// ライトのカラーは灰色
-		m_light.m_directionLig.ligColor.x = 0.8f;
-		m_light.m_directionLig.ligColor.y = 0.8f;
-		m_light.m_directionLig.ligColor.z = 0.8f;
 
 		//ポイントライト
 		//ポイントライトの初期座標を設定する。
 		m_light.m_pointLig.ptPosition.x = 0.0f;
-		m_light.m_pointLig.ptPosition.y = 50.0f;
-		m_light.m_pointLig.ptPosition.z = 50.0f;
+		m_light.m_pointLig.ptPosition.y = 0.0f;
+		m_light.m_pointLig.ptPosition.z = 0.0f;
 		//ポイントライトの初期カラーを設定する
 		m_light.m_pointLig.ptColor.x = 0.0f;
 		m_light.m_pointLig.ptColor.y = 0.0f;
@@ -44,7 +41,6 @@ namespace nsK2EngineLow {
 		m_light.m_spotLig.spPosition.y = 0.0f;
 		m_light.m_spotLig.spPosition.y = 50.0f;
 		*/
-
 		//スポットライト
 		//スポットライトのデータを初期化する
 		//初期座標はX = 0、Y = 50、Z = 0にする。
@@ -52,9 +48,9 @@ namespace nsK2EngineLow {
 		m_light.m_spotLig.spPosition.y = 0.0f;
 		m_light.m_spotLig.spPosition.z = 0.0f;
 		//スポットライトのカラーを設定。R = 10、G = 10、B = 10にする。
-		m_light.m_spotLig.spColor.x = 5.0f;
-		m_light.m_spotLig.spColor.y = 5.0f;
-		m_light.m_spotLig.spColor.z = 5.0f;
+		m_light.m_spotLig.spColor.x = 0.0f;
+		m_light.m_spotLig.spColor.y = 0.0f;
+		m_light.m_spotLig.spColor.z = 0.0f;
 		//射出範囲は300
 		m_light.m_spotLig.spRange = 600.0f;
 		//初期方向は斜め下にする。

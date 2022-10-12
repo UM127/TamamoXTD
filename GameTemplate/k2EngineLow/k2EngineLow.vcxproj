@@ -329,7 +329,8 @@
     <ClCompile Include="physics\SphereCollider.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PostEffect.cpp" />
-    <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="ShadowRender.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
@@ -402,6 +403,7 @@
     <ClInclude Include="graphics\Texture.h" />
     <ClInclude Include="graphics\VertexBuffer.h" />
     <ClInclude Include="HID\GamePad.h" />
+    <ClInclude Include="IRenderer.h" />
     <ClInclude Include="k2EngineLow.h" />
     <ClInclude Include="k2EngineLowPreCompile.h" />
     <ClInclude Include="level2D\CaslFile.h" />
@@ -430,7 +432,8 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PostEffect.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Shadow.h" />
+    <ClInclude Include="ShadowRender.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />

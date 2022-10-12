@@ -12,6 +12,12 @@ cbuffer ModelCb : register(b0){
 	float4x4 mProj;
 };
 
+// step-3 ライトビュープロジェクション行列の定数バッファーを定義
+cbuffer ShadowCb : register(b1)
+{
+    float4x4 mLVP;
+};
+
 //ディレクションライト用の構造体を定義する。
 struct DirectionLightST
 {
@@ -76,15 +82,21 @@ struct SPSIn{
     float3 normal       : NORMAL;
     
     // step-2 ピクセルシェーダーの入力に接ベクトルと従ベクトルを追加
-    float3 tangent : TANFENT;
+    float3 tangent : TANGENT;
     float3 biNormal : BINORMAL;
     
 	float2 uv 			: TEXCOORD0;	//uv座標。
     float3 worldPos		: TEXCOORD1;
     // step-1 ピクセルシェーダーへの入力にカメラ空間の法線を追加する
     float3 normalInView : TEXCOORD2; //カメラ空間の法線。
+    
+    // step-4 ライトビュースクリーン空間での座標を追加
+    float4 posInLVP : TEXCOORD3; //ライトビュースクリーン空間でのピクセルの座標
 };
-
+struct SPSOut
+{
+    float4 Color;
+};
 
 ///////////////////////////////////////////
 // 関数宣言
@@ -101,11 +113,11 @@ float3 CalcLigFromLimLight(SPSIn psIn);
 ////////////////////////////////////////////////
 // グローバル変数。
 ////////////////////////////////////////////////
-Texture2D<float4> g_texture : register(t0);             // モデルテクスチャ
 Texture2D<float4> g_albedo : register(t0);				// アルベドマップ
 Texture2D<float4> g_normalMap : register(t1);           // 法線マップにアクセスするための変数を追加
 Texture2D<float4> g_specularMap : register(t2);         // step-1 スペキュラマップにアクセスするための変数を追加
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	// ボーン行列。
+Texture2D<float4> g_shadowMap : register(t10); // シャドウマップ
 sampler g_sampler : register(s0);	//サンプラステート。
 
 ////////////////////////////////////////////////
@@ -161,6 +173,9 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
     psIn.biNormal = normalize(mul(m, vsIn.biNormal));
     psIn.uv = vsIn.uv;(mul(m, vsIn.tangent));
     
+    // step-5 ライトビュースクリーン空間の座標を計算する
+    psIn.posInLVP = mul(mLVP, psIn.worldPos);
+    
 	return psIn;
 }
 
@@ -177,70 +192,6 @@ SPSIn VSMain(SVSIn vsIn)
 SPSIn VSSkinMain( SVSIn vsIn ) 
 {
 	return VSMainCore(vsIn, true);
-}
-/// <summary>
-/// ピクセルシェーダーのエントリー関数。
-/// </summary>
-float4 PSMain( SPSIn psIn ) : SV_Target0
-{
-    // ディフューズマップをサンプリング
-    float4 diffuseMap = g_texture.Sample(g_sampler, psIn.uv);
-
-    //float3 normal = psIn.normal;
-    // 法線を計算
-    float3 normal = CalcNormal(psIn.normal, psIn.tangent, psIn.biNormal, psIn.uv);
-    
-    // Lambert拡散反射光を計算する
-    float3 diffuseLig = CalcLambertDiffuse(m_directionLig.ligDirection, m_directionLig.ligColor, psIn.normal);
-    // Phong鏡面反射を計算
-    // このサンプルでは鏡面反射の効果を分かりやすくするために10倍にしている
-    float3 specLig = CalcPhongSpecular(m_directionLig.ligDirection, m_directionLig.ligColor, psIn.worldPos, psIn.normal)*10.0f;
-    
-    // step-2 スペキュラマップからスペキュラ反射の強さをサンプリング
-    float specPower = g_specularMap.Sample(g_sampler, psIn.uv).r;
-    // step-3 鏡面反射の強さを鏡面反射光に乗算する
-    specLig *= specPower * 10.0f;
-    
-    // step-5 法線マップからタンジェントスペースの法線をサンプリングする
-    float3 localNormal = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
-    // タンジェントスペースの法線を0～1の範囲から-1～1の範囲に復元する
-    localNormal = (localNormal - 0.5f) * 2.0f;
-    // step-6 タンジェントスペースの法線をワールドスペースに変換する
-    normal = psIn.tangent * localNormal.x + psIn.biNormal * localNormal.y + normal * localNormal.z;
-    
-	// ディレクションライトによるライティングを計算する
-    float3 directionLig = CalcLigFromDirectionLight(psIn);
-    // ポイントライトによるライティングを計算する
-    float3 m_pointLig = CalcLigFromPointLight(psIn);
-    // スポットライトによるライティングを計算する
-    float3 m_spotLig = CalcLigFromSpotLight(psIn);
-    // リムライトによるライティングを計算する
-    float3 m_limlig = CalcLigFromLimLight(psIn);
-    
-    
-    float3 toonPoint = CalcLigFromToonLig(
-    m_directionLig.ligDirection,
-    psIn.normal		//サーフェイスの法線
-);
-    
-    //// ディレクションライト+ポイントライト+環境光+スポットライトして、最終的な光を求める
-    float3 lig = directionLig
-    //トゥーンの時は↓から消す
-                + m_pointLig;
-                + m_ambientLig.ambientLight;
-                + m_spotLig;
-                + m_limlig;
-                + diffuseLig;
-                + specLig;
-    lig += max(0.0f, dot(normal, -m_directionLig.ligDirection)) * m_directionLig.ligColor;
-    
-	//float4 albedoColor = g_albedo.Sample(g_sampler, psIn.uv);
-    float4 albedoColor = diffuseMap;
-    // テクスチャカラーに求めた光を乗算して最終出力カラーを求める
-    //とぅーんの時は消す
-    albedoColor.xyz *= lig;
-    //albedoColor.xyz *= toonPoint;
-	return albedoColor;
 }
 
 /// <summary>
@@ -466,4 +417,106 @@ float3 CalcLigFromLimLight(SPSIn psIn)
     float3 limColor = limPower * m_directionLig.ligColor;
     
     return limColor;
+}
+/// <summary>
+/// ピクセルシェーダーのエントリー関数。
+/// </summary>
+float4 PSMainCore(SPSIn psIn, uniform bool shadowreceive) : SV_Target0
+{
+    // ディフューズマップをサンプリング
+    float4 diffuseMap = g_albedo.Sample(g_sampler, psIn.uv);
+
+    //float3 normal = psIn.normal;
+    // 法線を計算
+    float3 normal = CalcNormal(psIn.normal, psIn.tangent, psIn.biNormal, psIn.uv);
+    
+    // Lambert拡散反射光を計算する
+    float3 diffuseLig = CalcLambertDiffuse(m_directionLig.ligDirection, m_directionLig.ligColor, psIn.normal);
+    // Phong鏡面反射を計算
+    // このサンプルでは鏡面反射の効果を分かりやすくするために10倍にしている
+    float3 specLig = CalcPhongSpecular(m_directionLig.ligDirection, m_directionLig.ligColor, psIn.worldPos, psIn.normal) * 10.0f;
+    
+    // step-2 スペキュラマップからスペキュラ反射の強さをサンプリング
+    float specPower = g_specularMap.Sample(g_sampler, psIn.uv).r;
+    // step-3 鏡面反射の強さを鏡面反射光に乗算する
+    specLig *= specPower * 10.0f;
+    
+    // step-5 法線マップからタンジェントスペースの法線をサンプリングする
+    float3 localNormal = g_normalMap.Sample(g_sampler, psIn.uv).xyz;
+    // タンジェントスペースの法線を0～1の範囲から-1～1の範囲に復元する
+    localNormal = (localNormal - 0.5f) * 2.0f;
+    // step-6 タンジェントスペースの法線をワールドスペースに変換する
+    normal = psIn.tangent * localNormal.x + psIn.biNormal * localNormal.y + normal * localNormal.z;
+    
+	// ディレクションライトによるライティングを計算する
+    float3 directionLig = CalcLigFromDirectionLight(psIn);
+    // ポイントライトによるライティングを計算する
+    float3 m_pointLig = CalcLigFromPointLight(psIn);
+    // スポットライトによるライティングを計算する
+    float3 m_spotLig = CalcLigFromSpotLight(psIn);
+    // リムライトによるライティングを計算する
+    float3 m_limlig = CalcLigFromLimLight(psIn);
+    
+    
+    float3 toonPoint = CalcLigFromToonLig(
+    m_directionLig.ligDirection,
+    psIn.normal		//サーフェイスの法線
+);
+    
+    //// ディレクションライト+ポイントライト+環境光+スポットライトして、最終的な光を求める
+    float3 lig = directionLig
+    //トゥーンの時は↓から消す
+                + m_pointLig
+    + m_ambientLig.ambientLight
+    + m_spotLig
+    + m_limlig;
+    lig += max(0.0f, dot(normal, -m_directionLig.ligDirection)) * m_directionLig.ligColor;
+    
+	//float4 albedoColor = g_abedo.Sample(g_sampler, psIn.uv);
+    float4 albedoColor = diffuseMap;
+    // テクスチャカラーに求めた光を乗算して最終出力カラーを求める
+    //とぅーんの時は消す
+    albedoColor.xyz *= lig;
+    
+
+    // step-6 ライトビュースクリーン空間からUV空間に座標変換
+    //【注目】ライトビュースクリーン空間からUV座標空間に変換している。
+    float2 shadowMapUV = psIn.posInLVP.xy / psIn.posInLVP.w;
+    shadowMapUV *= float2(0.5f, -0.5f);
+    shadowMapUV += 0.5f;
+    
+    // step-7 UV座標を使ってシャドウマップから影情報をサンプリング
+    float3 shadowMap = 1.0f;
+    if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+	&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
+)
+    {
+        shadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV);
+    }
+    
+    //シャドウを落とすなら実行
+    if (shadowreceive == true)
+    {
+    // step-8 サンプリングした影情報をテクスチャカラーに乗算する
+    //テクスチャカラーにシャドウマップからサンプリングした情報を掛け算する。
+    //影が描き込まれていたら0.5になっているので、色味が落ちて影っぽくなる。
+        albedoColor.xyz *= shadowMap;
+    }
+    
+    //albedoColor.xyz *= toonPoint;
+    return albedoColor;
+}
+
+// モデル用のピクセルシェーダーのエントリーポイント
+SPSOut PSMain(SPSIn psIn) : SV_Target0
+{
+    SPSOut psOut;
+    psOut.Color = PSMainCore(psIn, false);
+    return psOut;
+}
+SPSOut PSMainShadowReciever(SPSIn psIn) : SV_Target0
+{
+    SPSOut psOut;
+    psOut.Color = PSMainCore(psIn, true);
+    return psOut;
 }

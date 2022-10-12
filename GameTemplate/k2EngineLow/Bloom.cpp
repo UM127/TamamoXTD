@@ -5,8 +5,6 @@ namespace nsK2EngineLow {
 
 	Bloom g_bloom;
 
-
-
 	void Bloom::Init()
 	{
 		InitLuminanceSprite();
@@ -25,6 +23,8 @@ namespace nsK2EngineLow {
 		spriteInitData.m_height = 900;
 		//モノクロ用のシェーダーを指定する。
 		spriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+		//加算合成モードにすることでシャドウとの衝突を無くす。
+		spriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
 		//初期化オブジェクトを使って、スプライトを初期化する。
 
 		copyToFrameBufferSprite.Init(spriteInitData);
@@ -62,7 +62,7 @@ namespace nsK2EngineLow {
 	{
 		//step-1 ガウシアンブラーを初期化。
 		//gaussianBlur[0]は輝度テクスチャにガウシアンブラーをかける。
-		gaussianBlur[0].Init(&g_postEffect.luminnceRenderTarget.GetRenderTargetTexture());
+		gaussianBlur[0].Init(&g_postEffect.luminanceRenderTarget.GetRenderTargetTexture());
 		//gaussianBlur[1]はgaussianBlur[0]のテクスチャにガウシアンブラーをかける。
 		gaussianBlur[1].Init(&gaussianBlur[0].GetBokeTexture());
 		//gaussianBlur[2]はgaussianBlur[1]のテクスチャにガウシアンブラーをかける。

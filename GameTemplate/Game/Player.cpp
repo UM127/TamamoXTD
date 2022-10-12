@@ -14,9 +14,10 @@ bool Player::Start()
 	m_animationClipArray[enAnimationClip_Idle].Load("Assets/animData/nonPBR/Idle.tka");
 	m_animationClipArray[enAnimationClip_Idle].SetLoopFlag(true);
 	//モデルの読み込み
-	m_player.Init("Assets/modelData/model/PBR/nonPBR.tkm", m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
+	//m_player.ShadowInit("Assets/modelData/model/PBR/nonPBR.tkm");
+	m_player.Init("Assets/modelData/model/PBR/nonPBR.tkm", false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 	m_summonbox.Init("Assets/modelData/summonbox.tkm");
-	m_summonbox.SetScale({7.5f,1.0f,7.5f});
+	m_summonbox.SetScale({ 7.5f,1.0f,7.5f });
 	m_summonbox.Update();
 	//コリジョンオブジェクトを作成する。
 	m_collisionObject = NewGO<CollisionObject>(0);
@@ -28,7 +29,7 @@ bool Player::Start()
 	m_collisionObject->SetName("summonbox");
 	//自動で削除を無効にする(DeleteGOで削除する必要がある)。
 	m_collisionObject->SetIsEnableAutoDelete(false);
-	
+
 	//キャラコンを初期化する。
 	m_characterController.Init(25.0f, 75.0f, m_position);
 	m_player.SetRotation(m_rotation);
@@ -89,7 +90,7 @@ void Player::Font()
 }
 
 void Player::Move()
-{	
+{
 	//移動速度を初期化
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
@@ -114,10 +115,10 @@ void Player::Move()
 	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 	if (g_pad[0]->IsTrigger(enButtonB))
 	{
-			m_unit = NewGO<Unit>(0, "unit");
-			//ユニットタイプのものを召喚する。
-			m_unit->SetUnitTipe(m_summonUnitNo);
-			m_unit->SetPosition(m_summonboxpos);
+		m_unit = NewGO<Unit>(0, "unit");
+		//ユニットタイプのものを召喚する。
+		m_unit->SetUnitTipe(m_summonUnitNo);
+		m_unit->SetPosition(m_summonboxpos);
 	}
 	SelectUnittype();
 
@@ -179,7 +180,7 @@ void Player::AttackMade()
 				m_attack[1] = NewGO<Attack>(0, "attack");
 				m_attack[1]->SetAttack(0);
 				m_attack[1]->SetMoveSpeed(m_forward);
-				if (m_attackcooltime[0] >=0.2f && m_attackstate == true)
+				if (m_attackcooltime[0] >= 0.2f && m_attackstate == true)
 				{
 					//攻撃の作成(弾)
 					m_attack[2] = NewGO<Attack>(0, "attack");
@@ -214,6 +215,6 @@ void Player::Rotation()
 void Player::Render(RenderContext& rc)
 {
 	m_player.Draw(rc);
-	m_summonbox.Draw(rc);
+	//m_summonbox.Draw(rc);
 	m_fontRender.Draw(rc);
 }

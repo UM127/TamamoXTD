@@ -20,18 +20,18 @@ bool Unit::Start()
 		////アニメーションを読み込む
 		m_animationClipArray[enAnimationClip_Punch].Load("Assets/animData/Vanguard/Punch.tka");
 		m_animationClipArray[enAnimationClip_Punch].SetLoopFlag(true);
-		m_unit.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
+		m_unit.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 	}
 	if (m_characterNo == 1) {
 		////アニメーションを読み込む
 		m_animationClipArray[enAnimationClip_Punch].Load("Assets/animData/ElyByK/Punch.tka");
 		m_animationClipArray[enAnimationClip_Punch].SetLoopFlag(true);
-		m_unit.Init("Assets/modelData/model/ElyByK/ElyByK.tkm", m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
+		m_unit.Init("Assets/modelData/model/ElyByK/ElyByK.tkm", false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 	}
 	if (m_characterNo == 2) {
 		m_animationClipArray[enAnimationClip_Punch].Load("Assets/animData/HerakliosByADizon/Punch.tka");
 		m_animationClipArray[enAnimationClip_Punch].SetLoopFlag(true);
-		m_unit.Init("Assets/modelData/model/HerakliosByADizon/HerakliosByADizon.tkm", m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
+		m_unit.Init("Assets/modelData/model/HerakliosByADizon/HerakliosByADizon.tkm", false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 	}
 	m_attackcircle.SetScale({ 7.5f,1.0f,7.5f });
 	m_attackcircle.SetPosition(m_position);

@@ -10,26 +10,35 @@ namespace nsK2EngineLow {
 	{
 
 	}
-	void ModelRender::Init(const char* filePath, AnimationClip* animationClips,
+	void ModelRender::Init(const char* filePath, bool shadow, AnimationClip* animationClips,
 		int numAnimationClips,
 		EnModelUpAxis enModelUpAxis)
 	{
 		//モデルを初期化するための情報を設定。
 		ModelInitData initData;
 
-		//tkmファイルのファイルパスを指定する。
-		initData.m_tkmFilePath = filePath;
 		//シェーダーファイルのファイルパスを指定する。
 		initData.m_fxFilePath = "Assets/shader/model.fx";
+		if (m_ShadowRecieverBG== true)
+		{
+			initData.m_psEntryPointFunc = "PSMainShadowReciever";
+		}
+		else
+		{
+			initData.m_psEntryPointFunc = "PSMain";
+		}
+		initData.m_expandShaderResoruceView[0] = &g_shadow.GetShadowMap();
+		//tkmファイルのファイルパスを指定する。
+		initData.m_tkmFilePath = filePath;
 
-		// スケルトンを初期化。
-		InitSkeleton(filePath);
 
 		m_animationClips = animationClips;
 
 
 		if (m_animationClips != nullptr)
 		{
+			// スケルトンを初期化。
+			InitSkeleton(filePath);
 			//スケルトンを指定する。
 			initData.m_skeleton = &m_skeleton;
 			//スキンメッシュ用の頂点シェーダーのエントリーポイントを指定。
@@ -41,10 +50,7 @@ namespace nsK2EngineLow {
 			//ノンスキンメッシュ用の頂点シェーダーのエントリーポイントを指定する。
 			initData.m_vsEntryPointFunc = "VSMain";
 		}
-		/*
-		initData.m_expandConstantBuffer = &g_pointLig;
-		initData.m_expandConstantBufferSize = sizeof(g_pointLig);
-		*/
+
 		initData.m_expandConstantBuffer = &g_Lig.GetLight();
 		initData.m_expandConstantBufferSize = sizeof(g_Lig.GetLight());
 		
@@ -53,13 +59,59 @@ namespace nsK2EngineLow {
 		InitAnimation(animationClips, numAnimationClips, enModelUpAxis);
 		//作成した初期化データをもとにモデルを初期化する。
 		m_model.Init(initData);
-
+		ShadowInit(filePath, shadow/*, animationClips, numAnimationClips, enModelUpAxis*/);
 		//Initの中にアップデートを入れることでInitするときにアップデートしなくてよくなる。
+		Update();
+	}
+	void ModelRender::ShadowInit(const char* filePath, 
+		bool shadow,
+		AnimationClip* animationClips,
+		int numAnimationClips,
+		EnModelUpAxis enModelUpAxis)
+	{
+		if (shadow==true)
+		{
+			//影が落とされるモデル用のシェーダーを指定する。
+			m_bgModelInitData.m_fxFilePath = "Assets/shader/sampleShadowReciever.fx";
+			//シャドウマップを拡張SRVに設定する。
+			m_bgModelInitData.m_expandShaderResoruceView[0] = &g_shadow.GetShadowMap();
+			//ライトビュープロジェクション行列を拡張定数バッファに設定する。
+			m_bgModelInitData.m_expandConstantBuffer = (void*)&g_shadow.GetLightCamera().GetViewProjectionMatrix();
+			m_bgModelInitData.m_expandConstantBufferSize = sizeof(g_shadow.GetLightCamera().GetViewProjectionMatrix());
+			m_bgModelInitData.m_tkmFilePath = filePath;
+
+			m_bgModel.Init(m_bgModelInitData);
+			//ノンスキンメッシュ用の頂点シェーダーのエントリーポイントを指定する。
+			m_bgModelInitData.m_vsEntryPointFunc = "VSMain";
+		}
+		else
+		{
+			//【注目】シャドウマップ描画用のシェーダーを指定する。
+			m_ShadowModelInitData.m_fxFilePath = "Assets/shader/sampleDrawShadowMap.fx";
+			//m_ShadowModelInitData.m_fxFilePath = "Assets/shader/DrawShadowMap.fx";
+			m_ShadowModelInitData.m_tkmFilePath = filePath;
+			m_animationClips = animationClips;
+			if (m_animationClips != nullptr)
+			{
+				//スケルトンを指定する。
+				m_ShadowModelInitData.m_skeleton = &m_skeleton;
+				//スキンメッシュ用の頂点シェーダーのエントリーポイントを指定。
+				m_ShadowModelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
+				//モデルの上方向を指定する。
+				m_ShadowModelInitData.m_modelUpAxis = enModelUpAxis;
+			}
+			else {
+				//ノンスキンメッシュ用の頂点シェーダーのエントリーポイントを指定する。
+				m_ShadowModelInitData.m_vsEntryPointFunc = "VSMain";
+			}
+			m_ShadowModel.Init(m_ShadowModelInitData);
+		}
+		// アニメーションを初期化。
+		InitAnimation(animationClips, numAnimationClips, enModelUpAxis);
 		Update();
 	}
 	void ModelRender::Update()
 	{
-
 		//スケルトンを更新。
 		m_skeleton.Update(m_model.GetWorldMatrix());
 
@@ -68,6 +120,8 @@ namespace nsK2EngineLow {
 
 		// ワールド行列を更新。
 		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		m_bgModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		m_ShadowModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	}
 	void ModelRender::InitSkeleton(const char* filePath)
 	{
@@ -90,6 +144,16 @@ namespace nsK2EngineLow {
 	}
 	void ModelRender::Draw(RenderContext& rc)
 	{
-		m_model.Draw(rc);
+
+			m_model.Draw(rc);
+			if (!m_ShadowRecieverBG)
+			{
+				g_renderingEngine.AddRenderObject(this);
+			}
+			else
+			{
+				m_bgModel.Draw(rc);
+			}
+
 	}
 }
