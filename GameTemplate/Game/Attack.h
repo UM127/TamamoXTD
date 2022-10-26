@@ -26,7 +26,15 @@ public:
 	/// <param name="attack"></param>
 	void SetAttack(const int&attack)
 	{
-		m_attackno[attack];
+		m_attackno=attack;
+	}
+	/// <summary>
+	/// UŒ‚‚ÌÀ•W‚Ìİ’è
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPosition(const Vector3& position)
+	{
+		m_position = position;
 	}
 	/// <summary>
 	///À•W‚ğæ“¾‚·‚éB
@@ -52,6 +60,6 @@ private:
 	CollisionObject* m_collisionObject;
 	float m_deletetimer = 0.0f;
 	int bulletdelete = 0;
-	int m_attackno[5];
+	int m_attackno = 0;
 };
 

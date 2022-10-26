@@ -18,6 +18,9 @@
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="AttackManagement.cpp" />
+    <ClCompile Include="EXP.cpp" />
+    <ClCompile Include="PlayerLevelManagement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -31,5 +34,8 @@
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="AttackManagement.h" />
+    <ClInclude Include="EXP.h" />
+    <ClInclude Include="PlayerLevelManagement.h" />
   </ItemGroup>
 </Project>

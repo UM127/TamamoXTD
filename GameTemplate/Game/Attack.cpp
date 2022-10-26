@@ -9,11 +9,14 @@
 
 bool Attack::Start()
 {
-	//FindGOでPlayerクラスからm_position(プレイヤーの位置)を読み込む。
-	m_position = FindGO<Player>("player")->GetPlayerPosition();
-	m_position.y += 70.0f;
-	m_playerposition = FindGO<Player>("player")->GetPlayerPosition();
-
+	if (m_attackno == 0)
+	{
+		m_player = FindGO<Player>("player");
+		//FindGOでPlayerクラスからm_position(プレイヤーの位置)を読み込む。
+		m_position = m_player->GetPlayerPosition();
+		m_position.y += 40.0f;
+		m_position += m_moveSpeed * 10.0f;
+		m_playerposition = m_player->GetPlayerPosition();
 		//弾のモデルを読み込む。
 		m_modelRender.Init("Assets/modelData/SoySauceBullet.tkm");
 		m_modelRender.SetScale({ 0.2f,0.2f,0.2f });
@@ -28,14 +31,15 @@ bool Attack::Start()
 		Vector3 collisionPosition = m_position;
 		//座標を敵の位置に設定する。
 		collisionPosition = m_position;
-		//球状のコリジョンを作成する。
-		m_collisionObject->CreateSphere(collisionPosition,       //座標。
-			Quaternion::Identity,                                   //回転。
-			30.0f);                                                //球の大きさ(半径)。
+		//Box状のコリジョンを作成する。
+		m_collisionObject->CreateBox(collisionPosition,       //座標。
+			m_player->GetPlayerRot(),                                   //回転。
+			{ 40.0f,20.0f,20.0f });                                                //Boxの大きさ。
 			//名前を付ける。
-		m_collisionObject->SetName("SoysauceAttack");
+		m_collisionObject->SetName("BulletAttack");
 		//自動で削除を無効にする(DeleteGOで削除する必要がある)。
 		m_collisionObject->SetIsEnableAutoDelete(false);
+	}
 	
 	return true;
 }
@@ -60,7 +64,7 @@ void Attack::Update() //常に1秒間に60回呼び出される
 void Attack::Move()
 {
 	//弾の座標にmovespeedを+してやって、弾を動かす。
-	m_position += m_moveSpeed * 15.0f;
+	m_position += m_moveSpeed * 10.0f;
 	m_modelRender.SetPosition(m_position);
 	//setpositionで動いた弾の当たり判定の反映
 	m_collisionObject->SetPosition(m_position);

@@ -15,14 +15,13 @@ namespace nsK2EngineLow
 	void RenderingEngine::Execute(RenderContext& rc)
 	{
 		g_Lig.Update();
+		g_shadow.Render(rc);
 		
 		//m_modelRenderCB.m_light = g_Light.GetLight();
 		//m_modelRenderCB.mlvp = GetLightCamera().GetViewProjectionMatrix();
 		// ゲームオブジェクトマネージャーの描画処理を呼び出す。
 		g_engine->ExecuteRender();
 
-		g_Lig.Update();
-		g_shadow.Render(rc);
 		m_postEffect->Render(rc);
 		//ShadowRenderDraw(rc);
 

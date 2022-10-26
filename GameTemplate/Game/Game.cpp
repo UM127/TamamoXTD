@@ -4,9 +4,15 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "GameCamera.h"
+#include "Enemy.h"
 
 bool Game::Start()
 {
+	for (int o = 0; o < 50; o++)
+	{
+		Enemy* enemy = NewGO<Enemy>(0, "enemy");
+	}
+
 	//m_spriteRender.Init("Assets/sprite/gameclear.dds", 300.0f, 200.0f);
 
 	/*m_spriteHP.Init("Assets/sprite/hpbar.dds", 300.0f, 200.0f);
@@ -26,6 +32,7 @@ bool Game::Start()
 	//m_modelRender.Update();
 	//プレイヤーオブジェクトを作成する。
 	m_player = NewGO<Player>(0, "player");
+	//m_enemy = NewGO<Enemy>(0, "enemy");
 	//背景オブジェクトを作成する。
 	m_backGround = NewGO<BackGround>(0, "background");
 
@@ -37,7 +44,7 @@ void Game::Update()
 	// 左スティック(キーボード：WASD)で平行移動。
 	//m_pointligpos.x += g_pad[0]->GetLStickXF();
 	//m_pointligpos.y += g_pad[0]->GetLStickYF();
-	////	g_directionLig.SetPointPos(m_pointligpos);
+	//g_directionLig.SetPointPos(m_pointligpos);
 	//m_pointligpos.z += g_pad[0]->GetLStickYF();
 	//m_pointligpos.y = 50.0f;
 	//g_Lig.SetPointPos(m_pointligpos);

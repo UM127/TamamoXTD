@@ -14,17 +14,20 @@ namespace nsK2EngineLow {
 		{
 			return lightCamera;
 		}
-		//void Render(RenderContext& rc, RenderTarget& rt);
+		void SetLightCameraTarget(Vector3& position)
+		{
+			m_lighttarget = position;
+		}
 	private:
 		RenderTarget shadowMap;
 		Camera lightCamera;		// step-2 影描画用のライトカメラを作成する
 		Model bgModel;
-		//ModelRender teapotModel;
 		ModelInitData bgModelInitData;
 		// step-3 シャドウマップ描画用のモデルを用意する
 		ModelInitData teapotShadowModelInitData;
 		Model teapotShadowModel;
 		Sprite sprite;
+		Vector3 m_lighttarget;
 	};
 	extern ShadowRender g_shadow;
 }

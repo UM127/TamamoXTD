@@ -56,13 +56,13 @@ namespace nsK2EngineLow {
         // 影描画用のライトカメラを作成する
         // step-2 影描画用のライトカメラを作成する
         //カメラの位置を設定。これはライトの位置。
-        lightCamera.SetPosition(0, 600, 0);
+        lightCamera.SetPosition (m_lighttarget.x ,600.0f, m_lighttarget.z);
         //カメラの注視点を設定。これがライトが照らしている場所。
-        lightCamera.SetTarget(0, 0, 0);
+        lightCamera.SetTarget(m_lighttarget);
         //【注目】上方向を設定。今回はライトが真下を向いているので、X方向を上にしている。
         lightCamera.SetUp(1, 0, 0);
         //今回のサンプルでは画角を狭めにしておく。
-        lightCamera.SetViewAngle(Math::DegToRad(20.0f));
+        lightCamera.SetViewAngle(Math::DegToRad(80.0f));
         //ライトビュープロジェクション行列を計算している。
         lightCamera.Update();
         // 影を生成したいモデルをシャドウマップに描画する
@@ -84,18 +84,6 @@ namespace nsK2EngineLow {
             g_graphicsEngine->GetCurrentFrameBuffuerDSV()
         );
         rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
-        
-        //// ティーポットモデルを描画
-        //teapotModel.SetPosition({ 0,50,100 });
-        //teapotModel.Update();
-        //teapotModel.Draw(rc);
-
-        //// 背景を描画
-        //bgModel.Draw(rc);
-
-        //sprite.Update({ FRAME_BUFFER_W / -2.0f, FRAME_BUFFER_H / 2.0f,  0.0f }, g_quatIdentity, g_vec3One, { 0.0f, 1.0f });
-        //sprite.Draw(rc);
-        //
     }
 
 }

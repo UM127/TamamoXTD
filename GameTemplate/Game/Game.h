@@ -1,5 +1,6 @@
 #pragma once
 class Player;
+class Enemy;
 class Unit;
 class BackGround;
 class GameCamera;
@@ -28,6 +29,7 @@ private:
 	FontRender      m_fontRender;					//フォントレンダー
 	ModelRender     m_modelRender;					//モデルレンダー
 	Player*        m_player;						//プレイヤー
+	Enemy*			m_enemy;
 	Unit*			m_unit=nullptr;							//ユニット	
 	Vector3         m_pointligpos;                  //ポイントライトの座標
 	Vector3         m_directionligColor={ 1.0f, 1.0f, 1.0f };		    //セットする色
