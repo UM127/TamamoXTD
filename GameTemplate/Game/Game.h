@@ -4,6 +4,8 @@ class Enemy;
 class Unit;
 class BackGround;
 class GameCamera;
+class EnemySpawn;
+class GameUI;
 
 class Game : public IGameObject
 {
@@ -24,7 +26,9 @@ public:
 	void Render(RenderContext& rc) override;
 
 private:
-	BackGround* m_backGround;					    //背景。
+	BackGround* m_background;					    //背景。
+	EnemySpawn* m_enemyspawn;
+	GameUI* m_gameui;
 	SpriteRender	m_spriteRender;
 	FontRender      m_fontRender;					//フォントレンダー
 	ModelRender     m_modelRender;					//モデルレンダー

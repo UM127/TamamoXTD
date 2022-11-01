@@ -1,17 +1,14 @@
 #include "stdafx.h"
 #include "Game.h"
-#include "Unit.h"
 #include "Player.h"
 #include "BackGround.h"
 #include "GameCamera.h"
 #include "Enemy.h"
+#include "EnemySpawn.h"
+#include "GameUI.h"
 
 bool Game::Start()
 {
-	for (int o = 0; o < 50; o++)
-	{
-		Enemy* enemy = NewGO<Enemy>(0, "enemy");
-	}
 
 	//m_spriteRender.Init("Assets/sprite/gameclear.dds", 300.0f, 200.0f);
 
@@ -32,11 +29,13 @@ bool Game::Start()
 	//m_modelRender.Update();
 	//プレイヤーオブジェクトを作成する。
 	m_player = NewGO<Player>(0, "player");
-	//m_enemy = NewGO<Enemy>(0, "enemy");
+	//エネミー出現の管理をするクラス
+	m_enemyspawn = NewGO<EnemySpawn>(0, "enemyspawn");
 	//背景オブジェクトを作成する。
-	m_backGround = NewGO<BackGround>(0, "background");
-
+	m_background = NewGO<BackGround>(0, "background");
 	m_gameCamera = NewGO<GameCamera>(0, "gamecamera");
+	//ゲームUIの生成
+	m_gameui = NewGO<GameUI>(0, "gameui");
 	return true;
 }
 void Game::Update()

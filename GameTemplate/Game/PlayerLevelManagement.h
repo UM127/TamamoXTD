@@ -24,6 +24,9 @@ public:
 	/// </summary>
 	/// <param name="rc"></param>
 	void Render(RenderContext& rc) override;
+	/// <summary>
+	/// 経験値を加算
+	/// </summary>
 	void AddEXP()
 	{
 		m_exp++;
@@ -46,7 +49,6 @@ public:
 	}
 private:
 	FontRender m_fontRender;							//フォントレンダー
-	FontRender m_fontRender2;
 	int m_playerweaponflag = true;		//最初の武器
 	int m_playerweaponflag2 = false;
 	int m_playerweaponflag3 = false;

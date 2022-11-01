@@ -100,8 +100,6 @@ private:
 	Quaternion m_rotation = Quaternion::Identity;     //回転
 	Vector3 m_scale=Vector3::One;	                   //拡大率
 	Vector3 m_moveSpeed;							   //移動速度
-	Vector3 m_summonboxpos = Vector3::Zero;					//召喚用のボックスの位置
-	Vector3 m_summonboxcollisionObject = Vector3::Zero;		//召喚用のボックスのコリジョンの位置
 	Vector3 m_forward = {0.0f,0.0f,1.0f};                                 //キャラクターの前方向のベクトル
 	CollisionObject* m_collisionObject;
 

@@ -11,8 +11,8 @@
 namespace
 {
 	//乱数を生成
-	constexpr int MIN = -500;//乱数の範囲最低値
-	constexpr int MAX = 500;//乱数の範囲最大値
+	constexpr int MIN = -1500;//乱数の範囲最低値
+	constexpr int MAX = 1500;//乱数の範囲最大値
 	constexpr int RAND_NUMS_TO_GENERATE = 2;//乱数を生成する回数
 	const int E_MUSH_MAXHP = 10;//青キノコの最大HP
 	const int MUSHMOVESPEED = 1.0f;//キノコの移動速度

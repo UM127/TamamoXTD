@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "Game.h"
 #include "GameCamera.h"
-#include "Unit.h"
 #include "Attack.h"
 #include "Attackmanagement.h"
 #include "PlayerLevelManagement.h"
@@ -12,7 +11,6 @@
 namespace
 {
 	const int PL_MOVESPEED = 100.0f;
-
 }
 
 bool Player::Start()
@@ -23,7 +21,7 @@ bool Player::Start()
 	//m_animationClipArray[enAnimationClip_Idle].Load("Assets/animData/nonPBR/Idle.tka");
 	//m_animationClipArray[enAnimationClip_Idle].SetLoopFlag(true);
 	//モデルの読み込み
-	m_player.Init("Assets/modelData/model/PBR/nonPBR.tkm", false/*, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ*/);
+	m_player.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false/*, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ*/);
 
 	//キャラコンを初期化する。
 	m_characterController.Init(15.0f, 40.0f, m_position);
@@ -84,19 +82,22 @@ void Player::Move()
 
 void Player::Rotation()
 {
-	//xかzの移動速度があったら(スティックの入力があったら)。
-	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f)
-	{
-		float rot = atan2(-m_moveSpeed.x, m_moveSpeed.z);
-		//キャラクターの方向を変える。
-		m_rotation.SetRotationYFromDirectionXZ(m_moveSpeed);
-		//回転。
-		m_player.SetRotation(m_rotation);
-		//プレイヤーの前方向のベクトルを設定する。
-		m_forward = Vector3::AxisZ;
-		//ベクトルにクウォータニオンを適応してプレイヤーの向きに回転させる
-		m_rotation.Apply(m_forward);
-	}
+		//xかzの移動速度があったら(スティックの入力があったら)。
+		if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f)
+		{
+			if (!g_pad[0]->IsPress(enButtonA))
+			{
+				float rot = atan2(-m_moveSpeed.x, m_moveSpeed.z);
+				//キャラクターの方向を変える。
+				m_rotation.SetRotationYFromDirectionXZ(m_moveSpeed);
+				//回転。
+				m_player.SetRotation(m_rotation);
+			}
+			//プレイヤーの前方向のベクトルを設定する。
+			m_forward = Vector3::AxisZ;
+			//ベクトルにクウォータニオンを適応してプレイヤーの向きに回転させる
+			m_rotation.Apply(m_forward);
+		}
 }
 
 void Player::Render(RenderContext& rc)
