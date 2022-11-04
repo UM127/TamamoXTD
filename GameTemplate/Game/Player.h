@@ -74,7 +74,7 @@ private:
 	// アニメーションクリップの番号を表す列挙型。
 	enum EnAnimationClip {
 		enAnimationClip_Idle,				//待機アニメーション。	
-		//enAnimationClip_Walk,				//歩きアニメーション。
+		enAnimationClip_Walk,				//歩きアニメーション。
 		//enAnimationClip_Run,				//走りアニメーション。
 		//enAnimationClip_Attack1,			//攻撃アニメーション。
 		//enAnimationClip_Attack2,			//攻撃アニメーション。

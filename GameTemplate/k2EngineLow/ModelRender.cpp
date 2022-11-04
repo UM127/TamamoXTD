@@ -59,7 +59,7 @@ namespace nsK2EngineLow {
 		InitAnimation(animationClips, numAnimationClips, enModelUpAxis);
 		//作成した初期化データをもとにモデルを初期化する。
 		m_model.Init(initData);
-		ShadowInit(filePath, shadow/*, animationClips, numAnimationClips, enModelUpAxis*/);
+		ShadowInit(filePath, shadow, animationClips, numAnimationClips, enModelUpAxis);
 		//Initの中にアップデートを入れることでInitするときにアップデートしなくてよくなる。
 		Update();
 	}

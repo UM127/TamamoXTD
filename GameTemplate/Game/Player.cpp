@@ -18,10 +18,12 @@ bool Player::Start()
 	m_plmanagement = NewGO<PlayerLevelManagement>(0, "playerlevelmanagement");
 	m_attackmanagement = NewGO<AttackManagement>(0, "attackmanagement");
 	//アニメーションを読み込む
-	//m_animationClipArray[enAnimationClip_Idle].Load("Assets/animData/nonPBR/Idle.tka");
-	//m_animationClipArray[enAnimationClip_Idle].SetLoopFlag(true);
+	m_animationClipArray[enAnimationClip_Idle].Load("Assets/animData/Vanguard/Idle.tka");
+	m_animationClipArray[enAnimationClip_Idle].SetLoopFlag(true);
+	m_animationClipArray[enAnimationClip_Walk].Load("Assets/animData/Vanguard/Walk.tka");
+	m_animationClipArray[enAnimationClip_Walk].SetLoopFlag(true);
 	//モデルの読み込み
-	m_player.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false/*, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ*/);
+	m_player.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 
 	//キャラコンを初期化する。
 	m_characterController.Init(15.0f, 40.0f, m_position);

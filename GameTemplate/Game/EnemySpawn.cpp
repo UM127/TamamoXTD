@@ -3,7 +3,7 @@
 #include "Enemy.h"
 bool EnemySpawn::Start()
 {
-	for (int o = 0; o < 500; o++)
+	for (int o = 0; o < 25; o++)
 	{
 		Enemy* enemy = NewGO<Enemy>(0, "enemy");
 	}
@@ -22,7 +22,7 @@ void EnemySpawn::Update()
 }
 void EnemySpawn::EnemySpawnManagement()
 {
-	for (int o = 0; o < 100; o++)
+	for (int o = 0; o < 50; o++)
 	{
 		Enemy* enemy = NewGO<Enemy>(0, "enemy");
 	}

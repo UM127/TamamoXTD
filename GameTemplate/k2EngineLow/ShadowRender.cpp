@@ -62,7 +62,7 @@ namespace nsK2EngineLow {
         //【注目】上方向を設定。今回はライトが真下を向いているので、X方向を上にしている。
         lightCamera.SetUp(1, 0, 0);
         //今回のサンプルでは画角を狭めにしておく。
-        lightCamera.SetViewAngle(Math::DegToRad(80.0f));
+        //lightCamera.SetViewAngle(Math::DegToRad(80.0f));
         //ライトビュープロジェクション行列を計算している。
         lightCamera.Update();
         // 影を生成したいモデルをシャドウマップに描画する
