@@ -31,6 +31,10 @@ public:
 	/// </summary>
 	void Rotation();
 	/// <summary>
+	/// アニメーション管理関数
+	/// </summary>
+	void AnimationManagement();
+	/// <summary>
 	/// 位置の設定
 	/// </summary>
 	/// <param name="position"></param>
@@ -106,7 +110,7 @@ private:
 	Attack* m_attack[3];				//攻撃
 	AttackManagement* m_attackmanagement;				//攻撃の管理
 
-	int m_playerState;
+	int m_playerstate;
 	int m_attackstate = false;			//攻撃可能か不可能か
 	float m_attackmadetimer[5];
 	float m_attackcooltime[5];

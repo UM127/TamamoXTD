@@ -61,20 +61,20 @@ void Game::Update()
 	//g_Lig.SetSpotPos(m_spPosition);//スポットライトの位置を設定
 
 
-	//////Aボタンを押したら,光増加。
-	////if (g_pad[0]->IsPress(enButtonA))
-	////{
-	////	m_directionligColor.x +=0.1f;
-	////	m_directionligColor.y += 0.1f;
-	////	m_directionligColor.z += 0.1f;
-	////}
-	//////Bボタンを押したら、光減少。
-	////else if (g_pad[0]->IsPress(enButtonB))
-	////{
-	////	m_directionligColor.x -= 0.1f;
-	////	m_directionligColor.y -= 0.1f;
-	////	m_directionligColor.z -= 0.1f;
-	////}
+	////Aボタンを押したら,光増加。
+	//if (g_pad[0]->IsPress(enButtonA))
+	//{
+	//	m_directionligColor.x +=0.1f;
+	//	m_directionligColor.y += 0.1f;
+	//	m_directionligColor.z += 0.1f;
+	//}
+	////Bボタンを押したら、光減少。
+	//else if (g_pad[0]->IsPress(enButtonB))
+	//{
+	//	m_directionligColor.x -= 0.1f;
+	//	m_directionligColor.y -= 0.1f;
+	//	m_directionligColor.z -= 0.1f;
+	//}
 	//m_directionligColor.x = 1.5f;
 	//m_directionligColor.y = 1.5f;
 	//m_directionligColor.z = 1.5f;

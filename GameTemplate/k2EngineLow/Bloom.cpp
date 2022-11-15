@@ -88,7 +88,7 @@ namespace nsK2EngineLow {
 		finalSpriteInitData.m_psEntryPoinFunc = "PSBloomFinal";
 
 		//ただし、加算合成で描画するので、アルファブレンディングモードを加算にする。
-		finalSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
+		finalSpriteInitData.m_alphaBlendMode = AlphaBlendMode_None;
 		//カラーバッファのフォーマットは例によって、32ビット浮動小数点バッファ。
 		finalSpriteInitData.m_colorBufferFormat[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;
 

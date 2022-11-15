@@ -10,7 +10,7 @@ namespace nsK2EngineLow {
 	{
 
 	}
-	void ModelRender::Init(const char* filePath, bool shadow, AnimationClip* animationClips,
+	void ModelRender::Init(const char* filePath, bool shadow , bool selfluminance, AnimationClip* animationClips,
 		int numAnimationClips,
 		EnModelUpAxis enModelUpAxis)
 	{
@@ -50,9 +50,18 @@ namespace nsK2EngineLow {
 			//ノンスキンメッシュ用の頂点シェーダーのエントリーポイントを指定する。
 			initData.m_vsEntryPointFunc = "VSMain";
 		}
-
-		initData.m_expandConstantBuffer = &g_Lig.GetLight();
-		initData.m_expandConstantBufferSize = sizeof(g_Lig.GetLight());
+		m_light= g_Lig.GetLight();
+		if (!selfluminance)
+		{
+			initData.m_expandConstantBuffer = &m_light;
+			initData.m_expandConstantBufferSize = sizeof(m_light);
+		}
+		else
+		{
+			initData.m_expandConstantBuffer = &m_light;
+			initData.m_expandConstantBufferSize = sizeof(m_light);
+			m_light.m_directionLig.ligColor *= 10.0f;
+		}
 		
 
 		// アニメーションを初期化。

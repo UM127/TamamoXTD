@@ -53,7 +53,6 @@ float4 PSSamplingLuminance(PSInput In) : SV_Target0
     clip(t - 1.0f);
     return color;
 }
-
 // step-5 ボケ画像にアクセスするための変数を追加
 Texture2D<float4> g_bokeTexture_0 : register(t0);
 Texture2D<float4> g_bokeTexture_1 : register(t1);

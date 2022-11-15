@@ -22,6 +22,7 @@
     <ClCompile Include="PlayerLevelManagement.cpp" />
     <ClCompile Include="EnemySpawn.cpp" />
     <ClCompile Include="GameUI.cpp" />
+    <ClCompile Include="ShadowCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -39,5 +40,6 @@
     <ClInclude Include="PlayerLevelManagement.h" />
     <ClInclude Include="EnemySpawn.h" />
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="ShadowCamera.h" />
   </ItemGroup>
 </Project>

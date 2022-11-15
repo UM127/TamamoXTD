@@ -68,7 +68,7 @@ namespace nsK2EngineLow {
 			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
 			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 		);
-		//g_bloom.Draw(rc);
+		g_bloom.Draw(rc);
 		//ここでエフェクトドロー。
 		EffectEngine::GetInstance()->Draw();
     }

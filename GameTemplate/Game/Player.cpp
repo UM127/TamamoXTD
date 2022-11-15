@@ -23,7 +23,7 @@ bool Player::Start()
 	m_animationClipArray[enAnimationClip_Walk].Load("Assets/animData/Vanguard/Walk.tka");
 	m_animationClipArray[enAnimationClip_Walk].SetLoopFlag(true);
 	//モデルの読み込み
-	m_player.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
+	m_player.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false,false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 
 	//キャラコンを初期化する。
 	m_characterController.Init(15.0f, 40.0f, m_position);
@@ -43,6 +43,8 @@ void Player::Update()
 	Move();
 	//回転処理。
 	Rotation();
+	//アニメーション管理
+	AnimationManagement();
 	/*
 	m_player.UpdateWorldMatrix(
 		m_characterController.GetPosition(),
@@ -51,8 +53,28 @@ void Player::Update()
 	);
 	*/
 	m_player.Update();
-}
 
+}
+void Player::AnimationManagement()
+{
+	//xかzの移動速度があったら(スティックの入力があったら)。
+	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f)
+	{
+		m_playerstate = 1;
+	}
+	else
+	{
+		m_playerstate = 0;
+	}
+	if (m_playerstate == 0)
+	{
+		m_player.PlayAnimation(enAnimationClip_Idle, 0.2f);
+	}
+	if (m_playerstate == 1)
+	{
+		m_player.PlayAnimation(enAnimationClip_Walk, 0.2f);
+	}
+}
 void Player::Move()
 {
 	//移動速度を初期化

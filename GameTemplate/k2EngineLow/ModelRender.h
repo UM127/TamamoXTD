@@ -1,4 +1,5 @@
 #pragma once
+#include "DirectionLight.h"
 
 namespace nsK2EngineLow {
 	class ModelRender {
@@ -19,7 +20,7 @@ namespace nsK2EngineLow {
 		/// インスタンシング描画の詳細はSmaple_XXを参照してください。
 		/// </param>
 		void Init(
-			const char* filePath, bool shadow = false, AnimationClip* animationClips = nullptr,
+			const char* filePath, bool shadow = false, bool selfluminance = false, AnimationClip* animationClips = nullptr,
 			int numAnimationClips = 0,
 			EnModelUpAxis enModelUpAxis = enModelUpAxisZ);
 		/// <summary>
@@ -185,6 +186,7 @@ namespace nsK2EngineLow {
 		Quaternion	 				m_rotation = Quaternion::Identity;	// 回転。
 		Vector3						m_scale = Vector3::One;				// 拡大率。
 		EnModelUpAxis				m_enFbxUpAxis = enModelUpAxisZ;			// FBXの上方向。
+		DirectionLight::Light		m_light;
 		const char*					m_shadowfilePath;
 	};
 }

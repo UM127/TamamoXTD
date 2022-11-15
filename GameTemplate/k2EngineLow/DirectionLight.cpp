@@ -14,9 +14,9 @@ namespace nsK2EngineLow {
 		// 環境光
 		m_light.m_ambientLig.ambientLight = { 0.3f,0.3f,0.3f };
 		// ライトのカラーは灰色
-		m_light.m_directionLig.ligColor.x = 0.2f;
-		m_light.m_directionLig.ligColor.y = 0.2f;
-		m_light.m_directionLig.ligColor.z = 0.2f;
+		m_light.m_directionLig.ligColor.x = 0.5f;
+		m_light.m_directionLig.ligColor.y = 0.5f;
+		m_light.m_directionLig.ligColor.z = 0.5f;
 		//ディレクションライト
 		m_light.m_directionLig.ligDirection.x = 1.0f;
 		m_light.m_directionLig.ligDirection.y = -1.0f;

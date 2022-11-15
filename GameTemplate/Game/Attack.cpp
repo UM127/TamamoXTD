@@ -18,7 +18,7 @@ bool Attack::Start()
 		m_position += m_moveSpeed * 10.0f;
 		m_playerposition = m_player->GetPlayerPosition();
 		//弾のモデルを読み込む。
-		m_modelRender.Init("Assets/modelData/SoySauceBullet.tkm");
+		m_modelRender.Init("Assets/modelData/SoySauceBullet.tkm",true,true);
 		m_modelRender.SetScale({ 0.2f,0.2f,0.2f });
 		//FindGOで読み込んで入れたm_positionに弾を配置する。
 		m_modelRender.SetPosition(m_position);
