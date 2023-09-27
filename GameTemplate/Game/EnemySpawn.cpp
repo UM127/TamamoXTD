@@ -13,7 +13,7 @@ void EnemySpawn::Update()
 {
 	m_gametimer += g_gameTime->GetFrameDeltaTime();
 	m_spawntimer += g_gameTime->GetFrameDeltaTime();
-	if (m_spawntimer >= 10.0f)
+	if (m_spawntimer >= 5.0f)
 	{
 		EnemySpawnManagement();
 		m_spawntimer = 0.0f;

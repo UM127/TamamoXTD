@@ -14,6 +14,14 @@ bool Attack::Start()
 		m_player = FindGO<Player>("player");
 		//FindGOでPlayerクラスからm_position(プレイヤーの位置)を読み込む。
 		m_position = m_player->GetPlayerPosition();
+			if (m_attackA == 0)
+			{
+				m_position += m_side*20.0f;
+			}
+			if (m_attackA == 1)
+			{
+				m_position -= m_side * 20.0f;
+			}
 		m_position.y += 40.0f;
 		m_position += m_moveSpeed * 10.0f;
 		m_playerposition = m_player->GetPlayerPosition();

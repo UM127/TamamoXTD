@@ -35,11 +35,24 @@ void AttackManagement::AttackMade()
 {
 		if (m_plmanager->GetShotStage() == 1 && m_shotflag[0] == false)
 		{
-			//UŒ‚‚Ìì¬(’e)
-			m_attack[0] = NewGO<Attack>(0, "attack");
-			m_attack[0]->SetAttack(0);
-			m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-			m_shotflag[0] = true;
+			int i;
+			for (int o = 0; o < 2; ++o)
+			{
+				//UŒ‚‚Ìì¬(’e)
+				m_attack[o] = NewGO<Attack>(0, "attack");
+				m_attack[o]->SetAttack(0);
+				m_attack[o]->SetMoveSpeed(m_player->GetPlayerForward());
+				m_attack[o]->SetSide(m_player->GetSideVector());
+				if (o == 0)
+				{
+					m_attack[o]->SetAttackA(0);
+				}
+				if (o == 1)
+				{
+					m_attack[o]->SetAttackA(1);
+				}
+				m_shotflag[0] = true;
+			}
 			m_attackmadetimer[0] = 0.0f;
 		}
 		if (m_plmanager->GetShotStage() == 2)

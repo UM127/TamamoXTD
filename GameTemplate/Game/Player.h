@@ -42,7 +42,6 @@ public:
 	{
 		m_position = position;
 	}
-
 public:
 	/// <summary>
 	/// プレイヤーの座標を取得する。
@@ -63,6 +62,11 @@ public:
 	const Quaternion& GetPlayerRot()
 	{
 		return m_rotation;
+	}
+
+	const Vector3& GetSideVector()
+	{
+		return m_side;
 	}
 	/// <summary>
 	/// キャラクターコントローラーを取得。
@@ -105,6 +109,8 @@ private:
 	Vector3 m_scale=Vector3::One;	                   //拡大率
 	Vector3 m_moveSpeed;							   //移動速度
 	Vector3 m_forward = {0.0f,0.0f,1.0f};                                 //キャラクターの前方向のベクトル
+	Vector3 m_up = { 0.0f,1.0f,0.0f };
+	Vector3 m_side=Vector3::AxisX;
 	CollisionObject* m_collisionObject;
 
 	Attack* m_attack[3];				//攻撃

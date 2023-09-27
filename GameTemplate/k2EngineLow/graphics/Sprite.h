@@ -116,7 +116,10 @@ namespace nsK2EngineLow {
 		{
 			return m_textures[texNo].GetHeight();
 		}
-
+		Texture& GetTexture()
+		{
+			return m_textures[0];
+		}
 		void SetX(const float x)
 		{
 			m_x = x;

@@ -1,4 +1,5 @@
 #pragma once
+#include "SpriteRender.h"
 #include "DirectionLight.h"
 
 namespace nsK2EngineLow {
@@ -181,6 +182,7 @@ namespace nsK2EngineLow {
 		ModelInitData				m_bgModelInitData;					// シャドウを受ける背景用のInitdata
 		ModelInitData				m_ShadowModelInitData;				// シャドウモデル用のInitdata
 		Sprite						m_shadowsprite;						// シャドウ用の画像
+		SpriteRender				m_dissolvesprite;					// ディゾルブ用の画僧
 		Skeleton                    m_skeleton;	                        // スケルトン
 		Vector3 					m_position = Vector3::Zero;			// 座標。
 		Quaternion	 				m_rotation = Quaternion::Identity;	// 回転。

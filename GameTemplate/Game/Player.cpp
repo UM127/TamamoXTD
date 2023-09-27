@@ -119,8 +119,13 @@ void Player::Rotation()
 			}
 			//プレイヤーの前方向のベクトルを設定する。
 			m_forward = Vector3::AxisZ;
+			m_up = Vector3::AxisY;
 			//ベクトルにクウォータニオンを適応してプレイヤーの向きに回転させる
 			m_rotation.Apply(m_forward);
+			m_side.Cross(m_up, m_forward);
+
+
+
 		}
 }
 

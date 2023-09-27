@@ -150,7 +150,11 @@ namespace nsK2EngineLow {
 		{
 			m_sprite.Draw(rc);
 		}
-		
+
+		Sprite& GetSprite()
+		{
+			return m_sprite;
+		}
 	private:
 		Sprite			m_sprite;								//スプライト。
 		Vector3			m_position = Vector3::Zero;				//座標。

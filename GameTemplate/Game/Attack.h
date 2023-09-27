@@ -36,6 +36,16 @@ public:
 	{
 		m_position = position;
 	}
+
+	void SetAttackA(const int& A)
+	{
+		m_attackA = A;
+	}
+
+	void SetSide(const Vector3& position)
+	{
+		m_side = position;
+	}
 	/// <summary>
 	///座標を取得する。
 	/// </summary>
@@ -44,6 +54,8 @@ public:
 	{
 		return m_position;
 	}
+
+
 
 private:
 	FontRender m_fontRender;                     //文字の描画
@@ -54,6 +66,7 @@ private:
 	Vector3 m_moveSpeed;					 //移動速度。
 	Vector3   m_bulletposition;             //弾の位置
 	Vector3	m_efpos1;						//エフェクト用のポジション
+	Vector3 m_side=Vector3::AxisX;
 	Quaternion m_rotation;                  //クウォータニオン
 	ModelRender m_modelRender;             //モデルレンダー
 	Player* m_player;
@@ -61,5 +74,6 @@ private:
 	float m_deletetimer = 0.0f;
 	int bulletdelete = 0;
 	int m_attackno = 0;
+	int m_attackA = 0;
 };
 

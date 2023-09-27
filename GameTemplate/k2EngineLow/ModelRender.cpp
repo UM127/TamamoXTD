@@ -6,10 +6,12 @@ namespace nsK2EngineLow {
 	ModelRender::ModelRender()
 	{
 	}
+
 	ModelRender::~ModelRender()
 	{
 
 	}
+
 	void ModelRender::Init(const char* filePath, bool shadow , bool selfluminance, AnimationClip* animationClips,
 		int numAnimationClips,
 		EnModelUpAxis enModelUpAxis)
@@ -28,6 +30,8 @@ namespace nsK2EngineLow {
 			initData.m_psEntryPointFunc = "PSMain";
 		}
 		initData.m_expandShaderResoruceView[0] = &g_shadow.GetShadowMap();
+		m_dissolvesprite.Init("Assets/sprite/cloud.dds", 512.0f, 512.0f);
+		initData.m_expandShaderResoruceView[1] = &m_dissolvesprite.GetSprite().GetTexture();
 		//tkmファイルのファイルパスを指定する。
 		initData.m_tkmFilePath = filePath;
 
@@ -72,6 +76,7 @@ namespace nsK2EngineLow {
 		//Initの中にアップデートを入れることでInitするときにアップデートしなくてよくなる。
 		Update();
 	}
+
 	void ModelRender::ShadowInit(const char* filePath, 
 		bool shadow,
 		AnimationClip* animationClips,
@@ -119,6 +124,7 @@ namespace nsK2EngineLow {
 		InitAnimation(animationClips, numAnimationClips, enModelUpAxis);
 		Update();
 	}
+
 	void ModelRender::Update()
 	{
 		//スケルトンを更新。
@@ -132,6 +138,7 @@ namespace nsK2EngineLow {
 		m_bgModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 		m_ShadowModel.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	}
+
 	void ModelRender::InitSkeleton(const char* filePath)
 	{
 		//スケルトンのデータを読み込み。
