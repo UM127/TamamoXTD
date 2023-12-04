@@ -21,7 +21,9 @@ public:
 private:
 	SpriteRender m_playericon;
 	SpriteRender m_pistolsprite;
-	SpriteRender m_starsprite[4];
+	SpriteRender m_holywater;
+	SpriteRender m_pistolstarsprite[5];
+	SpriteRender m_holystarsprite[5];
 	PlayerLevelManagement* m_plmanager;
 };
 

@@ -32,15 +32,19 @@ void PlayerLevelManagement::Update()
 
 void PlayerLevelManagement::LevelManage()
 {
-	if (m_exp >= 90)
+	if (m_exp >= 5)
+	{
+		m_shotattackstage = 5;
+	}
+	else if (m_exp >= 4)
 	{
 		m_shotattackstage = 4;
 	}
-	else if (m_exp >= 60)
+	else if (m_exp >= 3)
 	{
 		m_shotattackstage = 3;
 	}
-	else if (m_exp >= 30)
+	else if (m_exp >= 2)
 	{
 		m_shotattackstage = 2;
 	}

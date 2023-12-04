@@ -8,8 +8,8 @@ bool AttackManagement::Start()
 {
 	m_plmanager = FindGO<PlayerLevelManagement>("playerlevelmanagement");
 	m_player = FindGO<Player>("player");
-	m_shotflag[0] = false;
-	m_shotflag[1] = false;
+	m_shotflag[0] = false;//’e
+	m_shotflag[1] = false;//¹…
 	m_shotflag[2] = false;
 	m_shotflag[3] = false;
 	return true;
@@ -23,126 +23,195 @@ void AttackManagement::Update()
 	{
 		//UŒ‚ì¬‚Ég‚¤ƒ^ƒCƒ}[‚Ìæ“¾
 		m_attackmadetimer[0] += g_gameTime->GetFrameDeltaTime();
+		m_attackmadetimer[1] += g_gameTime->GetFrameDeltaTime();
 	}
-	if (m_attackmadetimer[0] >= 1.0f&& m_shotflag[0] == true)
+	//’e
+	if (m_plmanager->GetShotStage() == 5)
+	{
+		if (m_attackmadetimer[0] >= 0.25f && m_shotflag[0] == true)
+		{
+			m_shotflag[0] = false;
+		}
+	}
+	else if (m_plmanager->GetShotStage() == 4)
+	{
+		if (m_attackmadetimer[0] >= 0.3f && m_shotflag[0] == true)
+		{
+			m_shotflag[0] = false;
+		}
+	}
+	else if (m_plmanager->GetShotStage() == 3)
+	{
+		if (m_attackmadetimer[0] >= 0.4f && m_shotflag[0] == true)
+		{
+			m_shotflag[0] = false;
+		}
+	}
+	else if (m_plmanager->GetShotStage() == 2)
+	{
+		if (m_attackmadetimer[0] >= 0.45f && m_shotflag[0] == true)
+		{
+			m_shotflag[0] = false;
+		}
+	}
+	else if (m_attackmadetimer[0] >= 0.5f && m_shotflag[0] == true)
 	{
 		m_shotflag[0] = false;
 	}
+	//¹…
+	if (m_plmanager->GetShotStage() == 5)
+	{
+		if (m_attackmadetimer[1] >= 0.25f && m_shotflag[1] == true)
+		{
+			m_shotflag[1] = false;
+		}
+	}
+	else if (m_plmanager->GetShotStage() == 4)
+	{
+		if (m_attackmadetimer[1] >= 0.3f && m_shotflag[1] == true)
+		{
+			m_shotflag[1] = false;
+		}
+	}
+	else if (m_plmanager->GetShotStage() == 3)
+	{
+		if (m_attackmadetimer[1] >= 0.4f && m_shotflag[1] == true)
+		{
+			m_shotflag[1] = false;
+		}
+	}
+	else if (m_plmanager->GetShotStage() == 2)
+	{
+		if (m_attackmadetimer[1] >= 0.45f && m_shotflag[1] == true)
+		{
+			m_shotflag[1] = false;
+		}
+	}
+	else if (m_attackmadetimer[1] >= 0.5f && m_shotflag[1] == true)
+	{
+		m_shotflag[1] = false;
+	}
+
 	AttackMade();
 }
 
 void AttackManagement::AttackMade()
 {
+	//’e
 		if (m_plmanager->GetShotStage() == 1 && m_shotflag[0] == false)
 		{
-			int i;
-			for (int o = 0; o < 2; ++o)
+				//UŒ‚‚Ìì¬(’e)
+				m_attack[0] = NewGO<Attack>(0, "attack");
+				m_attack[0]->SetAttack(0);
+				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
+				m_shotflag[0] = true;
+			m_attackmadetimer[0] = 0.0f;
+		}
+		if (m_plmanager->GetShotStage() == 2 && m_shotflag[0] == false)
+		{
+			if (m_shotflag[0] == false)
 			{
 				//UŒ‚‚Ìì¬(’e)
-				m_attack[o] = NewGO<Attack>(0, "attack");
-				m_attack[o]->SetAttack(0);
-				m_attack[o]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_attack[o]->SetSide(m_player->GetSideVector());
-				if (o == 0)
-				{
-					m_attack[o]->SetAttackA(0);
-				}
-				if (o == 1)
-				{
-					m_attack[o]->SetAttackA(1);
-				}
+				m_attack[0] = NewGO<Attack>(0, "attack");
+				m_attack[0]->SetAttack(0);
+				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
 				m_shotflag[0] = true;
 			}
 			m_attackmadetimer[0] = 0.0f;
 		}
-		if (m_plmanager->GetShotStage() == 2)
+		if (m_plmanager->GetShotStage() == 3 && m_shotflag[0] == false)
 		{
-			if (m_shotflag[0] == false&& m_shotflag[1] == false)
+			if (m_shotflag[0] == false)
 			{
 				//UŒ‚‚Ìì¬(’e)
 				m_attack[0] = NewGO<Attack>(0, "attack");
 				m_attack[0]->SetAttack(0);
 				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_shotflag[1] = true;
-			}
-			if (m_shotflag[1] == true&& m_attackmadetimer[0] >= 1.2f)
-			{
-				//UŒ‚‚Ìì¬(’e)
-				m_attack[0] = NewGO<Attack>(0, "attack");
-				m_attack[0]->SetAttack(0);
-				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_attackmadetimer[0] = 0.0f;
-				m_shotflag[1] = false;
 				m_shotflag[0] = true;
 			}
+			m_attackmadetimer[0] = 0.0f;
 		}
-		if (m_plmanager->GetShotStage() == 3)
+		if (m_plmanager->GetShotStage() == 4 && m_shotflag[0] == false)
 		{
-			if (m_shotflag[0] == false && m_shotflag[1] == false)
+			if (m_shotflag[0] == false)
 			{
 				//UŒ‚‚Ìì¬(’e)
 				m_attack[0] = NewGO<Attack>(0, "attack");
 				m_attack[0]->SetAttack(0);
 				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_shotflag[1] = true;
-			}
-			if (m_shotflag[1] == true && m_shotflag[2]==false&& m_attackmadetimer[0] >= 1.2f)
-			{
-				//UŒ‚‚Ìì¬(’e)
-				m_attack[0] = NewGO<Attack>(0, "attack");
-				m_attack[0]->SetAttack(0);
-				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_shotflag[2] = true;
-			}
-			if (m_shotflag[2] == true && m_attackmadetimer[0] >= 1.4f)
-			{
-				//UŒ‚‚Ìì¬(’e)
-				m_attack[0] = NewGO<Attack>(0, "attack");
-				m_attack[0]->SetAttack(0);
-				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_attackmadetimer[0] = 0.0f;
-				m_shotflag[1] = false;
-				m_shotflag[2] = false;
 				m_shotflag[0] = true;
 			}
+			m_attackmadetimer[0] = 0.0f;
 		}
-		if (m_plmanager->GetShotStage() == 4)
+		if (m_plmanager->GetShotStage() == 5 && m_shotflag[0] == false)
 		{
-			if (m_shotflag[0] == false && m_shotflag[1] == false)
+			if (m_shotflag[0] == false)
 			{
 				//UŒ‚‚Ìì¬(’e)
 				m_attack[0] = NewGO<Attack>(0, "attack");
 				m_attack[0]->SetAttack(0);
 				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_shotflag[1] = true;
-			}
-			if (m_shotflag[1] == true && m_shotflag[2] == false && m_attackmadetimer[0] >= 1.2f)
-			{
-				//UŒ‚‚Ìì¬(’e)
-				m_attack[0] = NewGO<Attack>(0, "attack");
-				m_attack[0]->SetAttack(0);
-				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_shotflag[2] = true;
-			}
-			if (m_shotflag[2] == true && m_shotflag[3] == false && m_attackmadetimer[0] >= 1.4f)
-			{
-				//UŒ‚‚Ìì¬(’e)
-				m_attack[0] = NewGO<Attack>(0, "attack");
-				m_attack[0]->SetAttack(0);
-				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_shotflag[3] = true;
-			}
-			if (m_shotflag[3] == true && m_attackmadetimer[0] >= 1.6f)
-			{
-				//UŒ‚‚Ìì¬(’e)
-				m_attack[0] = NewGO<Attack>(0, "attack");
-				m_attack[0]->SetAttack(0);
-				m_attack[0]->SetMoveSpeed(m_player->GetPlayerForward());
-				m_attackmadetimer[0] = 0.0f;
-				m_shotflag[1] = false;
-				m_shotflag[2] = false;
-				m_shotflag[3] = false;
 				m_shotflag[0] = true;
 			}
+			m_attackmadetimer[0] = 0.0f;
 		}
+		//¹…
+		if (m_plmanager->GetShotStage() == 1 && m_shotflag[1] == false)
+		{
+			//UŒ‚‚Ìì¬(¹…)
+			m_attack[1] = NewGO<Attack>(0, "attack");
+			m_attack[1]->SetAttack(1);
+			m_attack[1]->SetMoveSpeed(m_player->GetPlayerForward());
+			m_shotflag[1] = true;
+			m_attackmadetimer[1] = 0.0f;
+		}
+		if (m_plmanager->GetShotStage() == 2 && m_shotflag[1] == false)
+		{
+			if (m_shotflag[1] == false)
+			{
+				//UŒ‚‚Ìì¬(¹…)
+				m_attack[1] = NewGO<Attack>(0, "attack");
+				m_attack[1]->SetAttack(1);
+				m_attack[1]->SetMoveSpeed(m_player->GetPlayerForward());
+				m_shotflag[1] = true;
+			}
+			m_attackmadetimer[1] = 0.0f;
+		}
+		if (m_plmanager->GetShotStage() == 3 && m_shotflag[1] == false)
+		{
+			if (m_shotflag[1] == false)
+			{
+				//UŒ‚‚Ìì¬(¹…)
+				m_attack[1] = NewGO<Attack>(0, "attack");
+				m_attack[1]->SetAttack(1);
+				m_attack[1]->SetMoveSpeed(m_player->GetPlayerForward());
+				m_shotflag[1] = true;
+			}
+			m_attackmadetimer[1] = 0.0f;
+		}
+		if (m_plmanager->GetShotStage() == 4 && m_shotflag[1] == false)
+		{
+			if (m_shotflag[1] == false)
+			{
+				//UŒ‚‚Ìì¬(¹…)
+				m_attack[1] = NewGO<Attack>(0, "attack");
+				m_attack[1]->SetAttack(1);
+				m_attack[1]->SetMoveSpeed(m_player->GetPlayerForward());
+				m_shotflag[1] = true;
+			}
+			m_attackmadetimer[1] = 0.0f;
+		}
+		if (m_plmanager->GetShotStage() == 5 && m_shotflag[1] == false)
+		{
+			if (m_shotflag[1] == false)
+			{
+				//UŒ‚‚Ìì¬(¹…)
+				m_attack[1] = NewGO<Attack>(0, "attack");
+				m_attack[1]->SetAttack(1);
+				m_attack[1]->SetMoveSpeed(m_player->GetPlayerForward());
+				m_shotflag[1] = true;
+			}
+			m_attackmadetimer[1] = 0.0f;
+		}
+
 }

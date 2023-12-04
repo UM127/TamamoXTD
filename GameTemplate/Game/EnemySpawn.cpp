@@ -22,7 +22,7 @@ void EnemySpawn::Update()
 }
 void EnemySpawn::EnemySpawnManagement()
 {
-	for (int o = 0; o < 50; o++)
+	for (int o = 0; o < 5; o++)
 	{
 		Enemy* enemy = NewGO<Enemy>(0, "enemy");
 	}
