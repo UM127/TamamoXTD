@@ -14,7 +14,7 @@ bool Game::Start()
 	m_player = NewGO<Player>(0, "player");
 	//エネミー出現の管理
 	m_enemyspawn = NewGO<EnemySpawn>(0, "enemyspawn");
-	//背景オブジェクトを作成する。
+	//背景オブジェクトを作成。
 	m_background = NewGO<BackGround>(0, "background");
 	m_gameCamera = NewGO<GameCamera>(0, "gamecamera");
 	//ゲームUIの生成
