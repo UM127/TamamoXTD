@@ -53,7 +53,7 @@ bool Attack::Start()
 		collisionPosition = m_position;
 		//Box状のコリジョンを作成する。
 		m_collisionObject->CreateBox(collisionPosition,       //座標。
-			m_player->GetPlayerRot(),                                   //回転。
+			m_player->GetPlayerRot(),                                 //回転。
 			{ 40.0f,20.0f,20.0f });                                                //Boxの大きさ。
 			//名前を付ける。
 		m_collisionObject->SetName("BulletAttack");
