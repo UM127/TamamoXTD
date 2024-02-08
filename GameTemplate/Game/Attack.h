@@ -46,6 +46,7 @@ public:
 	{
 		m_side = position;
 	}
+
 	/// <summary>
 	///À•W‚ğæ“¾‚·‚éB
 	/// </summary>
@@ -54,7 +55,6 @@ public:
 	{
 		return m_position;
 	}
-
 
 
 private:
@@ -75,5 +75,6 @@ private:
 	int bulletdelete = 0;
 	int m_attackno = 0;
 	int m_attackA = 0;
+	int m_bounce = 0;//’µ‚Ë‚½‰ñ”
 };
 

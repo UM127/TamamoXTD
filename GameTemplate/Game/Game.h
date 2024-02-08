@@ -6,6 +6,7 @@ class BackGround;
 class GameCamera;
 class EnemySpawn;
 class GameUI;
+class Result;
 
 class Game : public IGameObject
 {
@@ -25,10 +26,39 @@ public:
 	/// <param name="rc"></param>
 	void Render(RenderContext& rc) override;
 
+	void SetWorldStop(const int& stop)
+	{
+		m_worldstop = stop;
+	}
+
+	/// <summary>
+	///世界が止まっているかを取得。
+	/// </summary>
+	/// <returns>世界が止まっているか</returns>
+	const int& GetWorldStop() const
+	{
+		return m_worldstop;
+	}
+
+	/// <summary>
+	///リザルトに飛ぶように設定。
+	/// </summary>
+	void SetResult(const int&result)
+	{
+		m_resultcreate = result;
+	}
+	/// <summary>
+	///クリア判定を設定。
+	/// </summary>
+	void SetClear()
+	{
+		m_clear = true;
+	}
 private:
 	BackGround* m_background;					    //背景。
 	EnemySpawn* m_enemyspawn;
 	GameUI* m_gameui;
+	Result* m_result;
 	SpriteRender	m_spriteRender;
 	FontRender      m_fontRender;					//フォントレンダー
 	ModelRender     m_modelRender;					//モデルレンダー
@@ -41,20 +71,15 @@ private:
 	Vector3			m_spDirection;                  //スポットライトの方向
 
 	SpriteRender    m_spriteHP;					//HPばー
-	//ここからは仮で追加したもの
 private:
-	void Try();
 
-	int m_itemState = 0;
-
-	int m_gage = 0;
-	int m_gari = 0;
-	int m_tea = 0;
-	int m_syoyu = 0;
-	int m_wasabi = 0;
+	int m_resultcreate = false;
+	int m_clear = false;
 
 	int m_hp=10;
 	int m_Maxhp=10;
+
+	int m_worldstop = false;
 
 
 	GameCamera* m_gameCamera;

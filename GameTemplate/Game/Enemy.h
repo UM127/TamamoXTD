@@ -1,7 +1,7 @@
 #pragma once
 class EXP;
 class Player;
-class PlayerLevelManagement;
+class Attack;
 
 class Enemy : public IGameObject
 {
@@ -37,7 +37,7 @@ private:
 	ModelRender m_enemy;
 	Player* m_player;
 	EXP* m_exp;
-	PlayerLevelManagement* m_plmanagement;
+	Attack* m_attack;
 	Vector3 m_position = Vector3::Zero;				   //座標
 	Vector3 m_playerposition;							//プレイヤーの座標
 	Quaternion m_rotation = Quaternion::Identity;     //回転

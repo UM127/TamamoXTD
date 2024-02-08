@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "EnemySpawn.h"
 #include "Enemy.h"
+#include "Game.h"
 bool EnemySpawn::Start()
 {
 	for (int o = 0; o < 25; o++)
@@ -11,18 +12,26 @@ bool EnemySpawn::Start()
 }
 void EnemySpawn::Update()
 {
-	m_gametimer += g_gameTime->GetFrameDeltaTime();
-	m_spawntimer += g_gameTime->GetFrameDeltaTime();
-	if (m_spawntimer >= 5.0f)
+	//¢ŠE‚ª~‚Ü‚Á‚Ä‚¢‚È‚¢‚È‚ç
+	if (FindGO<Game>("game")->GetWorldStop() == false)
 	{
-		EnemySpawnManagement();
-		m_spawntimer = 0.0f;
+		m_gametimer += g_gameTime->GetFrameDeltaTime();
+		m_spawntimer += g_gameTime->GetFrameDeltaTime();
+		if (m_spawntimer >= 5.0f)
+		{
+			EnemySpawnManagement();
+			m_spawntimer = 0.0f;
+		}
+		Font();
 	}
-	Font();
+	if (m_gametimer >= 1.0f)
+	{
+		FindGO<Game>("game")->SetResult(true);
+	}
 }
 void EnemySpawn::EnemySpawnManagement()
 {
-	for (int o = 0; o < 5; o++)
+	for (int o = 0; o <10; o++)
 	{
 		Enemy* enemy = NewGO<Enemy>(0, "enemy");
 	}

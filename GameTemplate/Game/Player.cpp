@@ -36,23 +36,27 @@ bool Player::Start()
 
 void Player::Update()
 {
-	//描画処理。
-	Font();
+	//世界が止まっていないなら
+	if (FindGO<Game>("game")->GetWorldStop() == false)
+	{
+		//描画処理。
+		Font();
 
-	//移動処理。
-	Move();
-	//回転処理。
-	Rotation();
-	//アニメーション管理
-	AnimationManagement();
-	/*
-	m_player.UpdateWorldMatrix(
-		m_characterController.GetPosition(),
-		m_rotation,
-		g_vec3One
-	);
-	*/
-	m_player.Update();
+		//移動処理。
+		Move();
+		//回転処理。
+		Rotation();
+		//アニメーション管理
+		AnimationManagement();
+		/*
+		m_player.UpdateWorldMatrix(
+			m_characterController.GetPosition(),
+			m_rotation,
+			g_vec3One
+		);
+		*/
+		m_player.Update();
+	}
 
 }
 void Player::AnimationManagement()
