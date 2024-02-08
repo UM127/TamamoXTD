@@ -2,7 +2,8 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "EXP.h"
-#include "PlayerLevelManagement.h"
+#include "Attack.h"
+#include "Game.h"
 //乱数を使えるようにする
 #include <random>
 //CollisionObjectを使用するために、ファイルをインクルードする。
@@ -15,13 +16,12 @@ namespace
 	constexpr int MAX = 1500;//乱数の範囲最大値
 	constexpr int RAND_NUMS_TO_GENERATE = 2;//乱数を生成する回数
 	const int E_MUSH_MAXHP = 10;//青キノコの最大HP
-	const int MUSHMOVESPEED = 1.0f;//キノコの移動速度
+	const int MUSHMOVESPEED = 3.0f;//キノコの移動速度
 }
 
 bool Enemy::Start()
 {
 	m_player = FindGO<Player>("player");
-	m_plmanagement = FindGO<PlayerLevelManagement>("playerlevelmanagement");
 	//敵の乱数。
 	std::random_device rd;
 	std::default_random_engine eng(rd());
@@ -64,10 +64,15 @@ bool Enemy::Start()
 }
 void Enemy::Update()
 {
-	Move();
-	Rotation();
-	//モデルの更新処理。
-	m_enemy.Update();
+	//世界が止まっていないなら
+	if (FindGO<Game>("game")->GetWorldStop() == false)
+	{
+		m_attack = FindGO<Attack>("attack");
+		Move();
+		Rotation();
+		//モデルの更新処理。
+		m_enemy.Update();
+	}
 }
 
 void Enemy::Rotation()

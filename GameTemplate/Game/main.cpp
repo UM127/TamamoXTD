@@ -12,7 +12,7 @@ K2EngineLow* g_k2EngineLow = nullptr;
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	// ƒQ[ƒ€‚Ì‰Šú‰»B
-	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("TamamoSurvivors"));
+	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, TEXT("KinokoSurvivors"));
 
 	// k2EngineLow‚Ì‰Šú‰»B
 	g_k2EngineLow = new K2EngineLow();
