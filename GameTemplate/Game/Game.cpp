@@ -12,7 +12,7 @@ bool Game::Start()
 {
 	//プレイヤーオブジェクトを作成する。
 	m_player = NewGO<Player>(0, "player");
-	//エネミー出現の管理をするクラス
+	//エネミー出現の管理をする
 	m_enemyspawn = NewGO<EnemySpawn>(0, "enemyspawn");
 	//背景オブジェクトを作成する。
 	m_background = NewGO<BackGround>(0, "background");
