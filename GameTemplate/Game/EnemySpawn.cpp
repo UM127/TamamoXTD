@@ -15,7 +15,7 @@ void EnemySpawn::Update()
 {
 	if (FindGO<Game>("game") != NULL)
 	{
-		if (m_gametimer >= 120.0f)
+		if (m_gametimer >= 150.0f)
 		{
 			FindGO<Game>("game")->SetResult(true);
 		}
@@ -31,7 +31,7 @@ void EnemySpawn::Update()
 			}
 			Font();
 		}
-		if (m_gametimer >= 90.0f)
+		if (m_gametimer >= 120.0f)
 		{
 			m_enemyspawnstage = 3;
 		}

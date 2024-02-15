@@ -13,8 +13,8 @@
 namespace
 {
 	//乱数を生成
-	constexpr int MIN = -1500;//乱数の範囲最低値
-	constexpr int MAX = 1500;//乱数の範囲最大値
+	constexpr int MIN = -800;//乱数の範囲最低値
+	constexpr int MAX = 800;//乱数の範囲最大値
 	constexpr int RAND_NUMS_TO_GENERATE = 2;//乱数を生成する回数
 	//const int E_MUSH_MAXHP = 10;//青キノコの最大HP
 	const int MUSHMOVESPEED = 1.95f;//キノコの移動速度
@@ -31,15 +31,32 @@ bool Enemy::Start()
 	for (int n = 0; n < RAND_NUMS_TO_GENERATE; ++n) {
 		switch (enepos) {
 		case 0:
-			m_position.x = (m_player->GetPlayerPosition().x*5.0f)+distr(eng);
+			m_position.x = m_player->GetPlayerPosition().x + distr(eng);
 			enepos++;
 			break;
 		case 1:
-			m_position.z = (m_player->GetPlayerPosition().z * 5.0f)+distr(eng);
+			m_position.z = m_player->GetPlayerPosition().z + distr(eng);
 			break;
 		}
 	}
 
+	if (0.0f < m_player->GetPlayerPosition().x + m_position.x)
+	{
+		m_position.x += 60.0f;
+	}
+	else if (m_player->GetPlayerPosition().x + m_position.x <= 0.0f)
+	{
+		m_position.x -= 60.0f;
+	}
+
+	if (0.0f < m_player->GetPlayerPosition().z + m_position.z)
+	{
+		m_position.z += 60.0f;
+	}
+	else if (m_player->GetPlayerPosition().z + m_position.z <= 0.0f)
+	{
+		m_position.z -= 60.0f;
+	}
 
 	//モデルの読み込み
 	m_enemy.Init("Assets/modelData/model/mush/bluemush.tkm", false);
