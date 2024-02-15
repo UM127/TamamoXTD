@@ -37,29 +37,32 @@ void PlayerLevelManagement::Font()
 }
 void PlayerLevelManagement::Update()
 {
-	if (m_levelUpFlag == false)
+	if (FindGO<Game>("game") != NULL)
 	{
-		FindGO<Game>("game")->SetWorldStop(false);
-	}
-	else
-	{
-		FindGO<Game>("game")->SetWorldStop(true);
-	}
-
-	//¢ŠE‚ª~‚Ü‚Á‚Ä‚¢‚È‚¢‚È‚ç
-	if (FindGO<Game>("game")->GetWorldStop() == false)
-	{
-		if (m_plselectlevelup > 4)
+		if (m_levelUpFlag == false)
 		{
-			m_plselectlevelup = 4;
+			FindGO<Game>("game")->SetWorldStop(false);
+		}
+		else
+		{
+			FindGO<Game>("game")->SetWorldStop(true);
 		}
 
-		//ƒŒƒxƒ‹ˆ—B
-		LevelManage();
-	}
+		//¢ŠE‚ª~‚Ü‚Á‚Ä‚¢‚È‚¢‚È‚ç
+		if (FindGO<Game>("game")->GetWorldStop() == false)
+		{
+			if (m_plselectlevelup > 4)
+			{
+				m_plselectlevelup = 4;
+			}
 
-	//•`‰æˆ—B
-	Font();
+			//ƒŒƒxƒ‹ˆ—B
+			LevelManage();
+		}
+
+		//•`‰æˆ—B
+		Font();
+	}
 }
 
 void PlayerLevelManagement::LevelManage()
@@ -90,6 +93,16 @@ void PlayerLevelManagement::LevelManage()
 }
 void PlayerLevelManagement::Render(RenderContext & rc)
 {
-	m_fontRender.Draw(rc);
-	m_fontRender2.Draw(rc);
+	if (FindGO<Game>("game") != NULL)
+	{
+		if (FindGO<Game>("game")->GetResult() == false)
+		{
+			m_fontRender.Draw(rc);
+		}
+	}
+	else if (FindGO<Game>("game") == NULL)
+	{
+		DeleteGO(this);
+	}
+	//m_fontRender2.Draw(rc);
 }

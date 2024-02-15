@@ -84,11 +84,17 @@ bool GameUI::Start()
 }
 void GameUI::Update()
 {
-
-	//もし世界が止まってるなら(ポーズなら)
-	if (FindGO<Game>("game")->GetWorldStop() == true)
+	if (FindGO<Game>("game") != NULL)
 	{
-		Pause();
+		//もし世界が止まってるなら(ポーズなら)
+		if (FindGO<Game>("game")->GetWorldStop() == true)
+		{
+			Pause();
+		}
+	}
+	else if (FindGO<Game>("game") == NULL)
+	{
+		DeleteGO(this);
 	}
 }
 void GameUI::Pause()

@@ -191,30 +191,33 @@ Attack::~Attack()
 
 void Attack::Update() //常に1秒間に60回呼び出される
 {
-	//世界が止まっていないなら
-	if (FindGO<Game>("game")->GetWorldStop() == false)
+	if (FindGO<Game>("game") != NULL)
 	{
-		//骨攻撃で、タイマーが4.9秒以内なら
-		if (m_attackno == 3 && m_deletetimer <= 4.9f)
+		//世界が止まっていないなら
+		if (FindGO<Game>("game")->GetWorldStop() == false)
 		{
-			//ヒット判定用のコリジョンの配列を取得。
-			const auto& collisions = g_collisionObjectManager->FindCollisionObjects("enemy_hit");
-
-			//for文で配列を回す。
-			for (auto collision : collisions)
+			//骨攻撃で、タイマーが4.9秒以内なら
+			if (m_attackno == 3 && m_deletetimer <= 4.9f)
 			{
-				//弾のコリジョンと敵のコリジョンが。
-				//衝突していて、バウンド回数が4回以下なら。
-				if (collision->IsHit(m_collisionObject) == true && m_bounce <= 3)
+				//ヒット判定用のコリジョンの配列を取得。
+				const auto& collisions = g_collisionObjectManager->FindCollisionObjects("enemy_hit");
+
+				//for文で配列を回す。
+				for (auto collision : collisions)
 				{
-					m_bounce++;
-					m_deletetimer = 0.0f;
+					//弾のコリジョンと敵のコリジョンが。
+					//衝突していて、バウンド回数が4回以下なら。
+					if (collision->IsHit(m_collisionObject) == true && m_bounce <= 3)
+					{
+						m_bounce++;
+						m_deletetimer = 0.0f;
+					}
 				}
 			}
+			Move();
+			//更新処理。
+			m_modelRender.Update();
 		}
-		Move();
-		//更新処理。
-		m_modelRender.Update();
 	}
 }
 

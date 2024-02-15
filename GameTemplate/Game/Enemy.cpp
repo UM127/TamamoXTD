@@ -4,6 +4,7 @@
 #include "EXP.h"
 #include "Attack.h"
 #include "Game.h"
+#include "EnemySpawn.h"
 //乱数を使えるようにする
 #include <random>
 //CollisionObjectを使用するために、ファイルをインクルードする。
@@ -15,8 +16,8 @@ namespace
 	constexpr int MIN = -1500;//乱数の範囲最低値
 	constexpr int MAX = 1500;//乱数の範囲最大値
 	constexpr int RAND_NUMS_TO_GENERATE = 2;//乱数を生成する回数
-	const int E_MUSH_MAXHP = 10;//青キノコの最大HP
-	const int MUSHMOVESPEED = 3.0f;//キノコの移動速度
+	//const int E_MUSH_MAXHP = 10;//青キノコの最大HP
+	const int MUSHMOVESPEED = 1.95f;//キノコの移動速度
 }
 
 bool Enemy::Start()
@@ -38,6 +39,8 @@ bool Enemy::Start()
 			break;
 		}
 	}
+
+
 	//モデルの読み込み
 	m_enemy.Init("Assets/modelData/model/mush/bluemush.tkm", false);
 
@@ -58,20 +61,48 @@ bool Enemy::Start()
 	//自動で削除を無効にする(DeleteGOで削除する必要がある)。
 	m_collisionObject->SetIsEnableAutoDelete(false);
 
-	EnemyHP();
+	//EnemyHP();
+
+	if (FindGO<EnemySpawn>("enemyspawn")->GetEnemyLevel() == 3)
+	{
+		m_hp = 20;
+	}
+	if (FindGO<EnemySpawn>("enemyspawn")->GetEnemyLevel() == 2)
+	{
+		m_hp = 10;
+	}
+	if (FindGO<EnemySpawn>("enemyspawn")->GetEnemyLevel() == 1)
+	{
+		m_hp = 1;
+	}
 
 	return true;
 }
 void Enemy::Update()
 {
-	//世界が止まっていないなら
-	if (FindGO<Game>("game")->GetWorldStop() == false)
+	if (FindGO<Game>("game") != NULL)
 	{
-		m_attack = FindGO<Attack>("attack");
-		Move();
-		Rotation();
-		//モデルの更新処理。
-		m_enemy.Update();
+		if (m_hp <= 0)
+		{
+			m_exp = NewGO<EXP>(0, "exp");
+			m_exp->SetEXPPos(m_position);
+			//m_plmanagement->AddEXP();
+			DeleteGO(m_collisionObject);
+			DeleteGO(this);
+		}
+		//世界が止まっていないなら
+		if (FindGO<Game>("game")->GetWorldStop() == false)
+		{
+			m_attack = FindGO<Attack>("attack");
+			Move();
+			Rotation();
+			//モデルの更新処理。
+			m_enemy.Update();
+		}
+	}
+	else if (FindGO<Game>("game") == NULL)
+	{
+		DeleteGO(this);
 	}
 }
 
@@ -123,11 +154,7 @@ void Enemy::Move()
 		//衝突していたら。
 		if (collision->IsHit(m_collisionObject) == true)
 		{
-			m_exp = NewGO<EXP>(0, "exp");
-			m_exp->SetEXPPos(m_position);
-			//m_plmanagement->AddEXP();
-			DeleteGO(m_collisionObject);
-			DeleteGO(this);
+			m_hp--;
 		}
 	}
 
@@ -143,6 +170,6 @@ void Enemy::EnemyHP()
 }
 void Enemy::Render(RenderContext& rc)
 {
-	m_mushhpbar.Draw(rc);
+	//m_mushhpbar.Draw(rc);
 	m_enemy.Draw(rc);
 }

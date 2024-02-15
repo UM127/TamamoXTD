@@ -1,5 +1,9 @@
 #pragma once
-class Result
+
+class Game;
+class Title;
+
+class Result : public IGameObject
 {
 public:
     Result();
@@ -27,9 +31,16 @@ public:
     {
         return m_GameClear;
     }
+    const int& GetResultStop() const
+    {
+        return m_resultstop;
+    }
+
 
 private:
     int m_GameClear = false;          // ゲームクリアか否か
+    int m_resultstop = false;
+    int m_resultscore = 0;
     SoundSource* resultBGM;                          //タイトルBGM
     SpriteRender spriteRender; //スプライトレンダ―。
     SpriteRender spriteRender2;

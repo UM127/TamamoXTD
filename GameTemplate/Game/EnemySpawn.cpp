@@ -2,6 +2,7 @@
 #include "EnemySpawn.h"
 #include "Enemy.h"
 #include "Game.h"
+#include "Result.h"
 bool EnemySpawn::Start()
 {
 	for (int o = 0; o < 25; o++)
@@ -12,30 +13,61 @@ bool EnemySpawn::Start()
 }
 void EnemySpawn::Update()
 {
-	//ê¢äEÇ™é~Ç‹Ç¡ÇƒÇ¢Ç»Ç¢Ç»ÇÁ
-	if (FindGO<Game>("game")->GetWorldStop() == false)
+	if (FindGO<Game>("game") != NULL)
 	{
-		m_gametimer += g_gameTime->GetFrameDeltaTime();
-		m_spawntimer += g_gameTime->GetFrameDeltaTime();
-		if (m_spawntimer >= 5.0f)
+		if (m_gametimer >= 120.0f)
 		{
-			EnemySpawnManagement();
-			m_spawntimer = 0.0f;
+			FindGO<Game>("game")->SetResult(true);
 		}
-		Font();
+		//ê¢äEÇ™é~Ç‹Ç¡ÇƒÇ¢Ç»Ç¢Ç»ÇÁ
+		if (FindGO<Game>("game")->GetWorldStop() == false)
+		{
+			m_gametimer += g_gameTime->GetFrameDeltaTime();
+			m_spawntimer += g_gameTime->GetFrameDeltaTime();
+			if (m_spawntimer >= 5.0f)
+			{
+				EnemySpawnManagement();
+				m_spawntimer = 0.0f;
+			}
+			Font();
+		}
+		if (m_gametimer >= 90.0f)
+		{
+			m_enemyspawnstage = 3;
+		}
+		else if (m_gametimer >= 60.0f)
+		{
+			m_enemyspawnstage = 2;
+		}
 	}
-	if (m_gametimer >= 1.0f)
+	else if (FindGO<Game>("game") == NULL)
 	{
-		FindGO<Game>("game")->SetResult(true);
+		DeleteGO(this);
 	}
 }
 void EnemySpawn::EnemySpawnManagement()
 {
-	for (int o = 0; o <10; o++)
+	if (m_enemyspawnstage == 3)
 	{
-		Enemy* enemy = NewGO<Enemy>(0, "enemy");
+		for (int o = 0; o < 20; o++)
+		{
+			Enemy* enemy = NewGO<Enemy>(0, "enemy");
+		}
 	}
-
+	else if (m_enemyspawnstage == 2)
+	{
+		for (int o = 0; o < 15; o++)
+		{
+			Enemy* enemy = NewGO<Enemy>(0, "enemy");
+		}
+	}
+	else if (m_enemyspawnstage == 1)
+	{
+		for (int o = 0; o < 10; o++)
+		{
+			Enemy* enemy = NewGO<Enemy>(0, "enemy");
+		}
+	}
 
 }
 void EnemySpawn::Font()
@@ -54,5 +86,8 @@ void EnemySpawn::Font()
 }
 void EnemySpawn::Render(RenderContext& rc)
 {
-	m_fontrender.Draw(rc);
+	if (m_setresultstop == false)
+	{
+		m_fontrender.Draw(rc);
+	}
 }

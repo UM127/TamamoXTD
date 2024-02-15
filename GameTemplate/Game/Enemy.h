@@ -46,5 +46,6 @@ private:
 	Vector3 m_forward = { 0.0f,0.0f,1.0f };                                 //キャラクターの前方向のベクトル
 	CollisionObject* m_collisionObject;
 	SpriteRender m_mushhpbar;							//HPバー
+	int m_hp = 0;
 };
 

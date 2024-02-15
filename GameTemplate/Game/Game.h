@@ -7,6 +7,7 @@ class GameCamera;
 class EnemySpawn;
 class GameUI;
 class Result;
+class Score;
 
 class Game : public IGameObject
 {
@@ -20,6 +21,7 @@ public:
 	/// 更新処理
 	/// </summary>
 	void Update() override;
+	void GameDelete();
 	/// <summary>
 	/// 描画処理
 	/// </summary>
@@ -47,6 +49,10 @@ public:
 	{
 		m_resultcreate = result;
 	}
+	const int& GetResult() const
+	{
+		return 	m_resultcreate;
+	}
 	/// <summary>
 	///クリア判定を設定。
 	/// </summary>
@@ -55,6 +61,7 @@ public:
 		m_clear = true;
 	}
 private:
+	Score* m_score;
 	BackGround* m_background;					    //背景。
 	EnemySpawn* m_enemyspawn;
 	GameUI* m_gameui;
@@ -80,6 +87,7 @@ private:
 	int m_Maxhp=10;
 
 	int m_worldstop = false;
+	int m_gamedelete = false;
 
 
 	GameCamera* m_gameCamera;

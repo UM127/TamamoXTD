@@ -24,6 +24,8 @@
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="ShadowCamera.cpp" />
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -43,5 +45,7 @@
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="ShadowCamera.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
 </Project>

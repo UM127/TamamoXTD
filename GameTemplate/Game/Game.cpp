@@ -7,6 +7,7 @@
 #include "EnemySpawn.h"
 #include "GameUI.h"
 #include "Result.h"
+#include "Score.h"
 
 bool Game::Start()
 {
@@ -19,24 +20,25 @@ bool Game::Start()
 	m_gameCamera = NewGO<GameCamera>(0, "gamecamera");
 	//ゲームUIの生成
 	m_gameui = NewGO<GameUI>(0, "gameui");
+	m_score = NewGO<Score>(0, "score");
 	return true;
 }
 void Game::Update()
 {
 	if (m_resultcreate == true && m_clear == true)
 	{
-		//ゴミ
-		////リザルトを作る。ゲームを停止する。リザルトにクリア判定を追加
-		//m_worldstop = true;
-		//m_result = NewGO<Result>(0, "result2222");
-		//m_result->SetClear();
+		//リザルトを作る。ゲームを停止する。リザルトにクリア判定を追加
+		m_worldstop = true;
+		m_result = NewGO<Result>(0, "result");
+		m_result->SetClear();
+		DeleteGO(this);
 	}
-	else
+	else if(m_resultcreate == true && m_clear == false)
 	{
-		//ゴミ
-		////リザルトを作る。ゲームを停止する。
-		//m_worldstop = true;
-		////m_result = NewGO<Result>(0, "result");
+		//リザルトを作る。ゲームを停止する。
+		m_worldstop = true;
+		m_result = NewGO<Result>(0, "result");
+		DeleteGO(this);
 	}
 
 	// 左スティック(キーボード：WASD)で平行移動。

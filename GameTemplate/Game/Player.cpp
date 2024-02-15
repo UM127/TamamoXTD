@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Player.h"
 #include "Game.h"
+#include "Enemy.h"
 #include "GameCamera.h"
 #include "Attack.h"
 #include "Attackmanagement.h"
@@ -10,7 +11,7 @@
 
 namespace
 {
-	const int PL_MOVESPEED = 100.0f;
+	const int PL_MOVESPEED = 150.0f;
 }
 
 bool Player::Start()
@@ -25,6 +26,21 @@ bool Player::Start()
 	//モデルの読み込み
 	m_player.Init("Assets/modelData/model/Vanguard/Vanguard.tkm", false,false, m_animationClipArray, enAnimationClip_Num, enModelUpAxisZ);
 
+	//コリジョンオブジェクトを作成する。
+	m_collisionObject = NewGO<CollisionObject>(0);
+	Vector3 collisionPosition = m_position;
+	//座標をプレイヤーの位置に設定する。
+	collisionPosition = m_position;
+	//collisionPosition.y = 50.0f;
+	//球状のコリジョンを作成する。
+	m_collisionObject->CreateSphere(collisionPosition,       //座標。
+		Quaternion::Identity,                             //回転。
+		15.0f);                                          //球の大きさ(半径)。
+	//名前を付ける。
+	m_collisionObject->SetName("player_hit");
+	//自動で削除を無効にする(DeleteGOで削除する必要がある)。
+	m_collisionObject->SetIsEnableAutoDelete(false);
+
 	//キャラコンを初期化する。
 	m_characterController.Init(15.0f, 40.0f, m_position);
 	m_player.SetRotation(m_rotation);
@@ -37,25 +53,45 @@ bool Player::Start()
 void Player::Update()
 {
 	//世界が止まっていないなら
-	if (FindGO<Game>("game")->GetWorldStop() == false)
+	if (FindGO<Game>("game") != NULL)
 	{
-		//描画処理。
-		Font();
+		if (FindGO<Game>("game")->GetWorldStop() == false)
+		{
+			//描画処理。
+			Font();
 
-		//移動処理。
-		Move();
-		//回転処理。
-		Rotation();
-		//アニメーション管理
-		AnimationManagement();
-		/*
-		m_player.UpdateWorldMatrix(
-			m_characterController.GetPosition(),
-			m_rotation,
-			g_vec3One
-		);
-		*/
-		m_player.Update();
+			//移動処理。
+			Move();
+			//回転処理。
+			Rotation();
+			//アニメーション管理
+			AnimationManagement();
+			/*
+			m_player.UpdateWorldMatrix(
+				m_characterController.GetPosition(),
+				m_rotation,
+				g_vec3One
+			);
+			*/
+			m_player.Update();
+		}
+		//ヒット判定用のコリジョンの配列を取得。
+		const auto& collisions = g_collisionObjectManager->FindCollisionObjects("enemy_hit");
+
+		//for文で配列を回す。
+		for (auto collision : collisions)
+		{
+			//敵のコリジョンとプレイヤーのコリジョンが。
+			//衝突していたらゲームオーバーにする。
+			if (collision->IsHit(m_collisionObject) == true)
+			{
+				FindGO<Game>("game")->SetResult(true);
+			}
+		}
+	}
+	else if (FindGO<Game>("game") == NULL)
+	{
+		DeleteGO(this);
 	}
 
 }
@@ -103,6 +139,8 @@ void Player::Move()
 
 	//キャラクターコントローラーを使用して、座標を更新。
 	m_position = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+
+	m_collisionObject->SetPosition(m_position);
 
 	m_player.SetPosition(m_position);
 	m_player.Update();

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "system/system.h"
 #include "Game.h"
+#include "Title.h"
 
 // K2EngineLowのグローバルアクセスポイント。
 K2EngineLow* g_k2EngineLow = nullptr;
@@ -26,6 +27,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_bloom.Init();
 	g_renderingEngine.Init();
 
+	//auto title= NewGO<Title>(0, "title");
 	auto game = NewGO<Game>(0, "game");
 
 	// ここからゲームループ。

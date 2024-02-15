@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "PlayerLevelManagement.h"
 #include "Game.h"
+#include "Score.h"
 //CollisionObjectを使用するために、ファイルをインクルードする。
 #include "CollisionObject.h"
 
@@ -34,12 +35,19 @@ bool EXP::Start()
 void EXP::Update()
 {
 	//世界が止まっていないなら
-	if (FindGO<Game>("game")->GetWorldStop() == false)
+	if (FindGO<Game>("game") != NULL)
 	{
-		Rotation();
-		EXPProcess();
-		//モデルの更新処理。
-		m_exp.Update();
+		if (FindGO<Game>("game")->GetWorldStop() == false)
+		{
+			Rotation();
+			EXPProcess();
+			//モデルの更新処理。
+			m_exp.Update();
+		}
+	}
+	else if (FindGO<Game>("game") == NULL)
+	{
+		DeleteGO(this);
 	}
 }
 void EXP::Rotation()
@@ -61,5 +69,5 @@ void EXP::EXPProcess()
 
 void EXP::Render(RenderContext& rc)
 {
-	m_exp.Draw(rc);
+		m_exp.Draw(rc);
 }

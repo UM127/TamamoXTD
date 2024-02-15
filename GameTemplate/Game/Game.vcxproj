@@ -236,6 +236,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerLevelManagement.cpp" />
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="ShadowCamera.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -243,6 +244,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack.h" />
@@ -257,9 +259,11 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerLevelManagement.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="ShadowCamera.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

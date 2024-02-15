@@ -118,6 +118,7 @@ private:
 
 	int m_playerstate;
 	int m_attackstate = false;			//UŒ‚‰Â”\‚©•s‰Â”\‚©
+	int m_hp = 1;
 	float m_attackmadetimer[5];
 	float m_attackcooltime[5];
 	float m_timer = 0.0f;
