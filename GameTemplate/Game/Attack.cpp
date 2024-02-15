@@ -251,8 +251,8 @@ void Attack::Move()
 		m_modelRender.SetPosition(m_position);
 		m_collisionObject->SetPosition(m_position);
 		m_modelRender.Update();
-		//¶¬‚³‚ê‚Ä‚©‚ç5•bŒo‰ß‚µ‚½‚ç
-		if (m_deletetimer >= 5.0f)
+		//¶¬‚³‚ê‚Ä‚©‚ç2•bŒo‰ß‚µ‚½‚ç
+		if (m_deletetimer >= 2.0f)
 		{
 			DeleteGO(this);
 		}
@@ -261,8 +261,8 @@ void Attack::Move()
 	if (m_attackno == 2)
 	{
 
-		//¶¬‚³‚ê‚Ä‚©‚ç5•bŒo‰ß‚µ‚½‚ç
-		if (m_deletetimer >= 5.0f)
+		//¶¬‚³‚ê‚Ä‚©‚ç3•bŒo‰ß‚µ‚½‚ç
+		if (m_deletetimer >= 3.0f)
 		{
 			DeleteGO(this);
 		}

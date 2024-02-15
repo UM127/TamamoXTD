@@ -39,7 +39,7 @@ Result::~Result()
 void Result::Update()
 {
     //Aƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½‚çTitle‚ðNewGO‚·‚éB
-    if (g_pad[0]->IsTrigger(enButtonA) )
+    if (g_pad[0]->IsTrigger(enButtonB) )
     {
         NewGO<Title>(0, "title");
         DeleteGO(this);

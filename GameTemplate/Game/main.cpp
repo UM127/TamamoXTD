@@ -27,8 +27,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_bloom.Init();
 	g_renderingEngine.Init();
 
-	//auto title= NewGO<Title>(0, "title");
-	auto game = NewGO<Game>(0, "game");
+	auto title= NewGO<Title>(0, "title");
+	//auto game = NewGO<Game>(0, "game");
 
 	// ここからゲームループ。
 	while (DispatchWindowMessage())

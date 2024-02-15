@@ -85,6 +85,7 @@ void Player::Update()
 			//衝突していたらゲームオーバーにする。
 			if (collision->IsHit(m_collisionObject) == true)
 			{
+				DeleteGO(m_collisionObject);
 				FindGO<Game>("game")->SetResult(true);
 			}
 		}

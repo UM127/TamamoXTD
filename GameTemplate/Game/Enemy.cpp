@@ -31,11 +31,11 @@ bool Enemy::Start()
 	for (int n = 0; n < RAND_NUMS_TO_GENERATE; ++n) {
 		switch (enepos) {
 		case 0:
-			m_position.x = distr(eng);
+			m_position.x = (m_player->GetPlayerPosition().x*5.0f)+distr(eng);
 			enepos++;
 			break;
 		case 1:
-			m_position.z = distr(eng);
+			m_position.z = (m_player->GetPlayerPosition().z * 5.0f)+distr(eng);
 			break;
 		}
 	}

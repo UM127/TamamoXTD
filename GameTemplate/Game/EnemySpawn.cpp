@@ -49,21 +49,21 @@ void EnemySpawn::EnemySpawnManagement()
 {
 	if (m_enemyspawnstage == 3)
 	{
-		for (int o = 0; o < 20; o++)
+		for (int o = 0; o < 15; o++)
 		{
 			Enemy* enemy = NewGO<Enemy>(0, "enemy");
 		}
 	}
 	else if (m_enemyspawnstage == 2)
 	{
-		for (int o = 0; o < 15; o++)
+		for (int o = 0; o < 10; o++)
 		{
 			Enemy* enemy = NewGO<Enemy>(0, "enemy");
 		}
 	}
 	else if (m_enemyspawnstage == 1)
 	{
-		for (int o = 0; o < 10; o++)
+		for (int o = 0; o < 7; o++)
 		{
 			Enemy* enemy = NewGO<Enemy>(0, "enemy");
 		}
