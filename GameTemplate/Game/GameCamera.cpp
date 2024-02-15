@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Game.h"
 
+#include "sound/SoundSource.h"
+
 bool GameCamera::Start()
 {
 	//注視点から視点までのベクトルを設定。
@@ -76,7 +78,7 @@ void GameCamera::Update()
 		//カメラの更新。
 		g_camera3D->Update();
 	}
-	else if (FindGO<Player>("player") != NULL)
+	else if (FindGO<Player>("player") == NULL)
 	{
 		DeleteGO(this);
 	}

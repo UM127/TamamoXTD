@@ -1,4 +1,5 @@
 #pragma once
+#include "sound/SoundSource.h"
 
 class Game;
 class Title;
@@ -41,7 +42,7 @@ private:
     int m_GameClear = false;          // ゲームクリアか否か
     int m_resultstop = false;
     int m_resultscore = 0;
-    SoundSource* resultBGM;                          //タイトルBGM
+    SoundSource* ResultSE;                          //リザルトSE
     SpriteRender spriteRender; //スプライトレンダ―。
     SpriteRender spriteRender2;
     SoundSource* clearBGM;      //clearBGMを読み込む

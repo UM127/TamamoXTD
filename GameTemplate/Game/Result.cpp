@@ -6,23 +6,19 @@
 #include "EnemySpawn.h"
 #include "Score.h"
 
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
+
 bool Result::Start()
 {
-    //FindGO<Game>("game")->SetResult(false);
     FindGO<EnemySpawn>("enemyspawn")->ResetTimer();
     FindGO<EnemySpawn>("enemyspawn")->SetResultStop(true);
     spriteRender.Init("Assets/sprite/Result.dds", 1600.0f, 900.0f);
     spriteRender2.Init("Assets/sprite/PERFECT.dds", 1600.0f, 900.0f);
 
     m_resultscore = FindGO<Score>("score")->GetScore();
-    //g_soundEngine->ResistWaveFileBank(4, "Assets/sound/Crasher.wav");
+    g_soundEngine->ResistWaveFileBank(3, "Assets/sound/kettei.wav");
 
-    //resultBGM = NewGO<SoundSource>(0);
-    //resultBGM->Init(4);
-    ////ループさせるときはtrue。
-    //resultBGM->Play(true);
-    ////音量の調整。
-    //resultBGM->SetVolume(0.25f);
     return true;
 
 }
@@ -41,6 +37,14 @@ void Result::Update()
     //Aボタンを押されたらTitleをNewGOする。
     if (g_pad[0]->IsTrigger(enButtonB) )
     {
+        ResultSE = NewGO<SoundSource>(0);
+        ResultSE->Init(3);
+        //ループさせるときはtrue。
+        ResultSE->Play(false);
+        //音量の調整。
+        ResultSE->SetVolume(0.7f);
+
+        DeleteGO(this);
         NewGO<Title>(0, "title");
         DeleteGO(this);
     }

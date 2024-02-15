@@ -47,6 +47,7 @@ void EXP::Update()
 	}
 	else if (FindGO<Game>("game") == NULL)
 	{
+		DeleteGO(m_collisionObject);
 		DeleteGO(this);
 	}
 }

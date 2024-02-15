@@ -66,6 +66,7 @@ private:
 	EnemySpawn* m_enemyspawn;
 	GameUI* m_gameui;
 	Result* m_result;
+	SoundSource* gameBGM;                      //ゲームBGMを読み込む
 	SpriteRender	m_spriteRender;
 	FontRender      m_fontRender;					//フォントレンダー
 	ModelRender     m_modelRender;					//モデルレンダー

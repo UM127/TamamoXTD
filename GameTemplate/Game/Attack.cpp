@@ -219,6 +219,11 @@ void Attack::Update() //í‚É1•bŠÔ‚É60‰ñŒÄ‚Ño‚³‚ê‚é
 			m_modelRender.Update();
 		}
 	}
+	else if (FindGO<Game>("game") == NULL)
+	{
+		DeleteGO(m_collisionObject);
+		DeleteGO(this);
+	}
 }
 
 void Attack::Move()

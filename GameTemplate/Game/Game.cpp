@@ -9,6 +9,9 @@
 #include "Result.h"
 #include "Score.h"
 
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
+
 bool Game::Start()
 {
 	//プレイヤーオブジェクトを作成する。
@@ -21,6 +24,14 @@ bool Game::Start()
 	//ゲームUIの生成
 	m_gameui = NewGO<GameUI>(0, "gameui");
 	m_score = NewGO<Score>(0, "score");
+
+	g_soundEngine->ResistWaveFileBank(0, "Assets/sound/BattleConflict.wav");
+	gameBGM = NewGO<SoundSource>(0);
+	gameBGM->Init(0);
+	//ループさせるときはtrue。
+	gameBGM->Play(true);
+	//音量の調整。
+	gameBGM->SetVolume(0.25f);
 	return true;
 }
 void Game::Update()
@@ -31,6 +42,7 @@ void Game::Update()
 		m_worldstop = true;
 		m_result = NewGO<Result>(0, "result");
 		m_result->SetClear();
+		DeleteGO(gameBGM);
 		DeleteGO(this);
 	}
 	else if(m_resultcreate == true && m_clear == false)
@@ -38,6 +50,7 @@ void Game::Update()
 		//リザルトを作る。ゲームを停止する。
 		m_worldstop = true;
 		m_result = NewGO<Result>(0, "result");
+		DeleteGO(gameBGM);
 		DeleteGO(this);
 	}
 
