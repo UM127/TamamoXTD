@@ -42,20 +42,20 @@ bool Enemy::Start()
 
 	if (0.0f < m_player->GetPlayerPosition().x + m_position.x)
 	{
-		m_position.x += 60.0f;
+		m_position.x += 100.0f;
 	}
 	else if (m_player->GetPlayerPosition().x + m_position.x <= 0.0f)
 	{
-		m_position.x -= 60.0f;
+		m_position.x -= 100.0f;
 	}
 
 	if (0.0f < m_player->GetPlayerPosition().z + m_position.z)
 	{
-		m_position.z += 60.0f;
+		m_position.z += 100.0f;
 	}
 	else if (m_player->GetPlayerPosition().z + m_position.z <= 0.0f)
 	{
-		m_position.z -= 60.0f;
+		m_position.z -= 100.0f;
 	}
 
 	//ƒ‚ƒfƒ‹‚Ì“Ç‚Ýž‚Ý
